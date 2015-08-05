@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150805224411) do
+ActiveRecord::Schema.define(version: 20150805225339) do
 
   create_table "boards", force: :cascade do |t|
     t.integer  "round_number", limit: 4,                   null: false
@@ -60,10 +60,12 @@ ActiveRecord::Schema.define(version: 20150805224411) do
     t.datetime "created_at",                           null: false
     t.datetime "updated_at",                           null: false
     t.integer  "game_id",    limit: 4,                 null: false
+    t.boolean  "guessed",    limit: 1, default: false, null: false
   end
 
   add_index "players", ["finished"], name: "index_players_on_finished", using: :btree
   add_index "players", ["game_id"], name: "index_players_on_game_id", using: :btree
+  add_index "players", ["guessed"], name: "index_players_on_guessed", using: :btree
   add_index "players", ["ready"], name: "index_players_on_ready", using: :btree
   add_index "players", ["user_id"], name: "index_players_on_user_id", using: :btree
 

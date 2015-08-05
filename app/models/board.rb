@@ -1,12 +1,18 @@
 class Board < ActiveRecord::Base
   has_many :guesses, dependent: :destroy
 
+  belongs_to :game
+
   def width
     4
   end
 
   def height
     4
+  end
+
+  def round_length
+    3.minutes
   end
 
   def cells

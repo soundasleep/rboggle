@@ -52,4 +52,7 @@ group :development, :test do
 
   # Testing
   gem 'rspec-rails'
+
+  # Allow time travel
+  gem 'timecop'
 end

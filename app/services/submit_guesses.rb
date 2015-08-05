@@ -14,6 +14,8 @@ class SubmitGuesses
       @board.guesses.create! word: guess, player: player
     end
 
+    player.update! guessed: true
+
     true
   end
 
