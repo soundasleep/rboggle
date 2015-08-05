@@ -11,7 +11,32 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150805011948) do
+ActiveRecord::Schema.define(version: 20150805024405) do
+
+  create_table "games", force: :cascade do |t|
+    t.boolean  "started",    limit: 1, default: false, null: false
+    t.boolean  "finished",   limit: 1, default: false, null: false
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
+  end
+
+  add_index "games", ["finished"], name: "index_games_on_finished", using: :btree
+  add_index "games", ["started"], name: "index_games_on_started", using: :btree
+
+  create_table "players", force: :cascade do |t|
+    t.integer  "user_id",    limit: 4,                 null: false
+    t.integer  "score",      limit: 4, default: 0,     null: false
+    t.boolean  "ready",      limit: 1, default: false, null: false
+    t.boolean  "finished",   limit: 1, default: false, null: false
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
+    t.integer  "game_id",    limit: 4,                 null: false
+  end
+
+  add_index "players", ["finished"], name: "index_players_on_finished", using: :btree
+  add_index "players", ["game_id"], name: "index_players_on_game_id", using: :btree
+  add_index "players", ["ready"], name: "index_players_on_ready", using: :btree
+  add_index "players", ["user_id"], name: "index_players_on_user_id", using: :btree
 
   create_table "sessions", force: :cascade do |t|
     t.string   "session_id", limit: 255,   null: false
@@ -34,4 +59,6 @@ ActiveRecord::Schema.define(version: 20150805011948) do
     t.datetime "updated_at",                null: false
   end
 
+  add_foreign_key "players", "games"
+  add_foreign_key "players", "users"
 end

@@ -1,1 +1,8 @@
-%h1 Welcome to Boggle
+%h1 Boggle
+
+- if current_user
+  = form_tag game_index_path, method: :create do |f|
+    = submit_tag "Play a game"
+
+- else
+  %p You need to login first.
