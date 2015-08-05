@@ -8,6 +8,11 @@ class GameController < ApplicationController
   def show
     @game = find_game
     @player = find_player
+
+    if @game.started?
+      board = @game.boards.last
+      redirect_to game_board_path(@game, board)
+    end
   end
 
   def ready
@@ -37,7 +42,7 @@ class GameController < ApplicationController
   end
 
   def find_player
-    find_game.players.where(user: current_user).first
+    find_game.players.where(user: current_user).first!
   end
 
   def find_or_create_game(user)

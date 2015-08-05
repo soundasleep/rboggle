@@ -8,6 +8,10 @@ Rails.application.routes.draw do
   resources :game, only: [ :show, :create ] do
     post :ready
     post :not_ready
+
+    resources :board, only: [ :show ] do
+      post :submit
+    end
   end
 
   get "/auth/google_login/callback" => "sessions#create"

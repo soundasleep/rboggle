@@ -1,4 +1,6 @@
 class Board < ActiveRecord::Base
+  has_many :guesses, dependent: :destroy
+
   def width
     4
   end

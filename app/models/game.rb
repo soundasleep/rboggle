@@ -4,7 +4,7 @@ class Game < ActiveRecord::Base
 
   def rounds
     if boards.any?
-      boards.max(&:round_number).round_number
+      boards.max_by(&:round_number).round_number
     else
       0
     end

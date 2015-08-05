@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150805032036) do
+ActiveRecord::Schema.define(version: 20150805224411) do
 
   create_table "boards", force: :cascade do |t|
     t.integer  "round_number", limit: 4,                   null: false
@@ -35,6 +35,22 @@ ActiveRecord::Schema.define(version: 20150805032036) do
 
   add_index "games", ["finished"], name: "index_games_on_finished", using: :btree
   add_index "games", ["started"], name: "index_games_on_started", using: :btree
+
+  create_table "guesses", force: :cascade do |t|
+    t.integer  "player_id",     limit: 4,                   null: false
+    t.integer  "board_id",      limit: 4,                   null: false
+    t.string   "word",          limit: 255,                 null: false
+    t.boolean  "possible",      limit: 1
+    t.boolean  "checked",       limit: 1,   default: false, null: false
+    t.boolean  "unique",        limit: 1
+    t.integer  "score",         limit: 4
+    t.datetime "created_at",                                null: false
+    t.datetime "updated_at",                                null: false
+    t.boolean  "in_dictionary", limit: 1
+  end
+
+  add_index "guesses", ["board_id"], name: "index_guesses_on_board_id", using: :btree
+  add_index "guesses", ["player_id"], name: "index_guesses_on_player_id", using: :btree
 
   create_table "players", force: :cascade do |t|
     t.integer  "user_id",    limit: 4,                 null: false
@@ -73,6 +89,8 @@ ActiveRecord::Schema.define(version: 20150805032036) do
   end
 
   add_foreign_key "boards", "games"
+  add_foreign_key "guesses", "boards"
+  add_foreign_key "guesses", "players"
   add_foreign_key "players", "games"
   add_foreign_key "players", "users"
 end
