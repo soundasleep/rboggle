@@ -72,6 +72,34 @@ RSpec.describe StartGame, type: :service do
               expect(board.cells).to_not be_empty
             end
 
+            it "has a width of 4" do
+              expect(board.width).to eq(4)
+            end
+
+            it "has a height of 4" do
+              expect(board.height).to eq(4)
+            end
+
+            it "has a cell at (0,0)" do
+              expect(board.cell_at(0,0)).to_not be_empty
+            end
+
+            it "has a value at (0,0)" do
+              expect(board.cell_at(0,0)).to match(/^[a-z]{1,2}$/)
+            end
+
+            it "has 4 rows of cells" do
+              expect(board.cells.length).to eq(4)
+            end
+
+            it "has 4 columns of cells" do
+              expect(board.cells[0].length).to eq(4)
+            end
+
+            it "returns the same value through cells and cell_at" do
+              expect(board.cell_at(0,0)).to eq(board.cells[0][0])
+            end
+
             it "is round 1" do
               expect(board.round_number).to eq(1)
             end

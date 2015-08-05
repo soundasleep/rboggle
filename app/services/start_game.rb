@@ -22,7 +22,7 @@ class StartGame
   end
 
   def create_serialized
-    ""
+    "a,b,c,d|a,b,c,d|a,b,c,d|a,b,c,d"
   end
 
 end
