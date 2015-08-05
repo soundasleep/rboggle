@@ -10,10 +10,7 @@ class BoardController < ApplicationController
 
     SubmitGuesses.new(player: find_player, board: find_board, guesses: guesses).call
 
-    find_guesses.delete_all
-
-    guesses.split("\n").reject(&:empty?).uniq.each do |guess|
-    end
+    redirect_to game_path(find_game)
   end
 
   private

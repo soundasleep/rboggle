@@ -10,7 +10,7 @@ class SubmitGuesses
   def call
     @board.guesses.where(player: player).delete_all
 
-    guesses.split("\n").map(&:strip).reject(&:empty?).uniq.each do |guess|
+    guesses.split(/[\s+]/).reject(&:empty?).uniq.each do |guess|
       @board.guesses.create! word: guess, player: player
     end
 

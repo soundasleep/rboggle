@@ -75,6 +75,78 @@ RSpec.describe SubmitGuesses, type: :service do
     end
   end
 
+  context "with two unique guesses separated by spaces" do
+    let(:guesses) { " cat dog " }
+    let(:player) { player1 }
+
+    context "after called" do
+      before { SubmitGuesses.new(args).call }
+
+      context "player 1s guesses" do
+        it "has two" do
+          expect(board.guesses.where(player: player1).length).to eq(2)
+        end
+
+        it "has cat" do
+          expect(board.guesses.where(player: player1).map(&:word)).to include("cat")
+        end
+
+        it "has dog" do
+          expect(board.guesses.where(player: player1).map(&:word)).to include("dog")
+        end
+
+        context "the first guess" do
+          let(:guess) { board.guesses.where(player: player1).first }
+
+          it "has not been checked" do
+            expect(guess).to_not be_checked
+          end
+        end
+      end
+
+      context "player 2s guesses" do
+        it "are empty" do
+          expect(board.guesses.where(player: player2)).to be_empty
+        end
+      end
+    end
+  end
+  context "with two unique guesses separated by spaces" do
+    let(:guesses) { "cat\ncat dog \n" }
+    let(:player) { player1 }
+
+    context "after called" do
+      before { SubmitGuesses.new(args).call }
+
+      context "player 1s guesses" do
+        it "has two" do
+          expect(board.guesses.where(player: player1).length).to eq(2)
+        end
+
+        it "has cat" do
+          expect(board.guesses.where(player: player1).map(&:word)).to include("cat")
+        end
+
+        it "has dog" do
+          expect(board.guesses.where(player: player1).map(&:word)).to include("dog")
+        end
+
+        context "the first guess" do
+          let(:guess) { board.guesses.where(player: player1).first }
+
+          it "has not been checked" do
+            expect(guess).to_not be_checked
+          end
+        end
+      end
+
+      context "player 2s guesses" do
+        it "are empty" do
+          expect(board.guesses.where(player: player2)).to be_empty
+        end
+      end
+    end
+  end
   context "with one unique guesses" do
     let(:guesses) { "cat\ncat" }
     let(:player) { player1 }
