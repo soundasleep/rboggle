@@ -11,7 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150805024405) do
+ActiveRecord::Schema.define(version: 20150805025112) do
+
+  create_table "boards", force: :cascade do |t|
+    t.integer  "round_number", limit: 4,                   null: false
+    t.boolean  "finished",     limit: 1,   default: false, null: false
+    t.string   "cells",        limit: 255,                 null: false
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
+    t.integer  "game_id",      limit: 4,                   null: false
+  end
+
+  add_index "boards", ["finished"], name: "index_boards_on_finished", using: :btree
+  add_index "boards", ["game_id"], name: "index_boards_on_game_id", using: :btree
+  add_index "boards", ["round_number"], name: "index_boards_on_round_number", using: :btree
 
   create_table "games", force: :cascade do |t|
     t.boolean  "started",    limit: 1, default: false, null: false
@@ -59,6 +72,7 @@ ActiveRecord::Schema.define(version: 20150805024405) do
     t.datetime "updated_at",                null: false
   end
 
+  add_foreign_key "boards", "games"
   add_foreign_key "players", "games"
   add_foreign_key "players", "users"
 end
