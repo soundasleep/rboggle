@@ -3,6 +3,14 @@ class Game < ActiveRecord::Base
   has_many :boards, dependent: :destroy
 
   def rounds
-    boards.max(&:round_number) || 0
+    if boards.any?
+      boards.max(&:round_number).round_number
+    else
+      0
+    end
+  end
+
+  def ready_to_start?
+    players.all?(&:ready?) && (players.count >= 2)
   end
 end

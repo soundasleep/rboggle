@@ -34,6 +34,14 @@ RSpec.describe FindOrCreateGame, type: :service do
       it "is not finished" do
         expect(game).to_not be_finished
       end
+
+      it "the current player is not ready" do
+        expect(game.players.first).to_not be_ready
+      end
+
+      it "is not ready to start" do
+        expect(game).to_not be_ready_to_start
+      end
     end
   end
 
@@ -72,6 +80,14 @@ RSpec.describe FindOrCreateGame, type: :service do
 
         it "is not finished" do
           expect(game).to_not be_finished
+        end
+
+        it "the first player is not ready" do
+          expect(game.players.first).to_not be_ready
+        end
+
+        it "is not ready to start" do
+          expect(game).to_not be_ready_to_start
         end
       end
     end

@@ -11,15 +11,23 @@ class GameController < ApplicationController
   end
 
   def ready
+    game = find_game
+
     find_player.update! ready: true
 
-    redirect_to game_path(find_game)
+    if game.ready_to_start?
+      StartGame.new(game: game).call
+    end
+
+    redirect_to game_path(game)
   end
 
   def not_ready
+    game = find_game
+
     find_player.update! ready: false
 
-    redirect_to game_path(find_game)
+    redirect_to game_path(game)
   end
 
   private

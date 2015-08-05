@@ -11,12 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150805025112) do
+ActiveRecord::Schema.define(version: 20150805032036) do
 
   create_table "boards", force: :cascade do |t|
     t.integer  "round_number", limit: 4,                   null: false
     t.boolean  "finished",     limit: 1,   default: false, null: false
-    t.string   "cells",        limit: 255,                 null: false
+    t.string   "serialized",   limit: 255,                 null: false
     t.datetime "created_at",                               null: false
     t.datetime "updated_at",                               null: false
     t.integer  "game_id",      limit: 4,                   null: false
