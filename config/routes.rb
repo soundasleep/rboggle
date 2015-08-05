@@ -6,7 +6,8 @@ Rails.application.routes.draw do
   root "welcome#index"
 
   resources :game, only: [ :show, :create ] do
-
+    post :ready
+    post :not_ready
   end
 
   get "/auth/google_login/callback" => "sessions#create"

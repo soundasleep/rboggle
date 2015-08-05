@@ -1,0 +1,15 @@
+%h2 Waiting for players...
+
+%ul
+  - @game.players.each do |player|
+    %li
+      = player.ready? ? "ready" : "not ready"
+      = player.user.name
+
+- if @player.ready?
+  = form_tag game_not_ready_path(@game) do |f|
+    = submit_tag "Not ready"
+
+- else
+  = form_tag game_ready_path(@game) do |f|
+    = submit_tag "Ready"
