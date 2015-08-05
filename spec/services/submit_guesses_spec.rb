@@ -6,13 +6,15 @@ RSpec.describe SubmitGuesses, type: :service do
   let(:player2) { game.players.create! user: user }
   let(:game) { Game.create! }
   let(:board) { game.boards.create! round_number: 1, serialized: "empty" }
+  let(:player1_guesses) { board.guesses.where(player: player1) }
+  let(:player2_guesses) { board.guesses.where(player: player2) }
 
   let(:args) {{ board: board, player: player, guesses: guesses }}
 
   context "before called" do
     context "player 1s guesses" do
       it "are empty" do
-        expect(board.guesses.where(player: player1)).to be_empty
+        expect(player1_guesses).to be_empty
       end
     end
   end
@@ -26,13 +28,13 @@ RSpec.describe SubmitGuesses, type: :service do
 
       context "player 1s guesses" do
         it "are empty" do
-          expect(board.guesses.where(player: player1)).to be_empty
+          expect(player1_guesses).to be_empty
         end
       end
 
       context "player 2s guesses" do
         it "are empty" do
-          expect(board.guesses.where(player: player2)).to be_empty
+          expect(player2_guesses).to be_empty
         end
       end
     end
@@ -47,19 +49,19 @@ RSpec.describe SubmitGuesses, type: :service do
 
       context "player 1s guesses" do
         it "has two" do
-          expect(board.guesses.where(player: player1).length).to eq(2)
+          expect(player1_guesses.length).to eq(2)
         end
 
         it "has cat" do
-          expect(board.guesses.where(player: player1).map(&:word)).to include("cat")
+          expect(player1_guesses.map(&:word)).to include("cat")
         end
 
         it "has dog" do
-          expect(board.guesses.where(player: player1).map(&:word)).to include("dog")
+          expect(player1_guesses.map(&:word)).to include("dog")
         end
 
         context "the first guess" do
-          let(:guess) { board.guesses.where(player: player1).first }
+          let(:guess) { player1_guesses.first }
 
           it "has not been checked" do
             expect(guess).to_not be_checked
@@ -69,7 +71,7 @@ RSpec.describe SubmitGuesses, type: :service do
 
       context "player 2s guesses" do
         it "are empty" do
-          expect(board.guesses.where(player: player2)).to be_empty
+          expect(player2_guesses).to be_empty
         end
       end
     end
@@ -84,19 +86,19 @@ RSpec.describe SubmitGuesses, type: :service do
 
       context "player 1s guesses" do
         it "has two" do
-          expect(board.guesses.where(player: player1).length).to eq(2)
+          expect(player1_guesses.length).to eq(2)
         end
 
         it "has cat" do
-          expect(board.guesses.where(player: player1).map(&:word)).to include("cat")
+          expect(player1_guesses.map(&:word)).to include("cat")
         end
 
         it "has dog" do
-          expect(board.guesses.where(player: player1).map(&:word)).to include("dog")
+          expect(player1_guesses.map(&:word)).to include("dog")
         end
 
         context "the first guess" do
-          let(:guess) { board.guesses.where(player: player1).first }
+          let(:guess) { player1_guesses.first }
 
           it "has not been checked" do
             expect(guess).to_not be_checked
@@ -106,7 +108,7 @@ RSpec.describe SubmitGuesses, type: :service do
 
       context "player 2s guesses" do
         it "are empty" do
-          expect(board.guesses.where(player: player2)).to be_empty
+          expect(player2_guesses).to be_empty
         end
       end
     end
@@ -120,19 +122,19 @@ RSpec.describe SubmitGuesses, type: :service do
 
       context "player 1s guesses" do
         it "has two" do
-          expect(board.guesses.where(player: player1).length).to eq(2)
+          expect(player1_guesses.length).to eq(2)
         end
 
         it "has cat" do
-          expect(board.guesses.where(player: player1).map(&:word)).to include("cat")
+          expect(player1_guesses.map(&:word)).to include("cat")
         end
 
         it "has dog" do
-          expect(board.guesses.where(player: player1).map(&:word)).to include("dog")
+          expect(player1_guesses.map(&:word)).to include("dog")
         end
 
         context "the first guess" do
-          let(:guess) { board.guesses.where(player: player1).first }
+          let(:guess) { player1_guesses.first }
 
           it "has not been checked" do
             expect(guess).to_not be_checked
@@ -142,7 +144,7 @@ RSpec.describe SubmitGuesses, type: :service do
 
       context "player 2s guesses" do
         it "are empty" do
-          expect(board.guesses.where(player: player2)).to be_empty
+          expect(player2_guesses).to be_empty
         end
       end
     end
@@ -156,17 +158,17 @@ RSpec.describe SubmitGuesses, type: :service do
 
       context "player 1s guesses" do
         it "has one" do
-          expect(board.guesses.where(player: player1).length).to eq(1)
+          expect(player1_guesses.length).to eq(1)
         end
 
         it "has cat" do
-          expect(board.guesses.where(player: player1).map(&:word)).to include("cat")
+          expect(player1_guesses.map(&:word)).to include("cat")
         end
       end
 
       context "player 2s guesses" do
         it "are empty" do
-          expect(board.guesses.where(player: player2)).to be_empty
+          expect(player2_guesses).to be_empty
         end
       end
     end
@@ -181,21 +183,21 @@ RSpec.describe SubmitGuesses, type: :service do
 
       context "player 1s guesses" do
         it "has two" do
-          expect(board.guesses.where(player: player1).length).to eq(2)
+          expect(player1_guesses.length).to eq(2)
         end
 
         it "has cat" do
-          expect(board.guesses.where(player: player1).map(&:word)).to include("cat")
+          expect(player1_guesses.map(&:word)).to include("cat")
         end
 
         it "has dog" do
-          expect(board.guesses.where(player: player1).map(&:word)).to include("dog")
+          expect(player1_guesses.map(&:word)).to include("dog")
         end
       end
 
       context "player 2s guesses" do
         it "are empty" do
-          expect(board.guesses.where(player: player2)).to be_empty
+          expect(player2_guesses).to be_empty
         end
       end
     end
