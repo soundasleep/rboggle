@@ -10,7 +10,7 @@ class BoardController < ApplicationController
 
     SubmitGuesses.new(player: find_player, board: find_board, guesses: guesses).call
 
-    redirect_to game_path(find_game)
+    redirect_to game_board_path(find_game, find_board)
   end
 
   private

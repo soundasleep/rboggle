@@ -10,7 +10,7 @@ class StartGame
 
     @game.update! started: true
 
-    @game.players.each{ |player| player.update! ready: false }
+    @game.players.each{ |player| player.update! ready: false, guessed: false }
 
     true
   end

@@ -11,7 +11,11 @@ class GameController < ApplicationController
 
     if @game.started?
       board = @game.boards.last
-      redirect_to game_board_path(@game, board)
+
+      if !board.finished?
+        redirect_to game_board_path(@game, board)
+      else
+      end
     end
   end
 
