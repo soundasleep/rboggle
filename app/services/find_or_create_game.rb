@@ -8,7 +8,10 @@ class FindOrCreateGame
   def call
     game = existing_game || create_game
 
-    game.players.create! user: user
+    # only create a new player for unique users
+    if !game.players.any?{ |p| p.user == user }
+      game.players.create! user: user
+    end
 
     game
   end

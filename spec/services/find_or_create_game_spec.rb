@@ -15,6 +15,8 @@ RSpec.describe FindOrCreateGame, type: :service do
     let(:game) { result }
 
     context "the created game" do
+      before { game.save! }
+
       it "has one player" do
         expect(game.players.length).to eq(1)
       end
@@ -42,7 +44,30 @@ RSpec.describe FindOrCreateGame, type: :service do
       it "is not ready to start" do
         expect(game).to_not be_ready_to_start
       end
+
+      context "when called again" do
+        let(:result2) { service.call }
+
+        it "returns a Game" do
+          expect(result).to be_kind_of(Game)
+        end
+
+        let(:game2) { result2 }
+
+        before { game2.save! }
+
+        context "the created game" do
+          it "has one player" do
+            expect(game2.players.length).to eq(1)
+          end
+
+          it "has the current user as a player" do
+            expect(game2.players.map(&:user)).to include(user)
+          end
+        end
+      end
     end
+
   end
 
   context "with an existing game" do

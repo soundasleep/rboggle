@@ -24,6 +24,8 @@
     = form_tag game_ready_path(@game) do |f|
       = submit_tag "Ready"
 
+  #wait-for-game-to-start{ GamePresenter.new(@game).to_data_set }
+
 %h2 Score board
 
 %table.score-board
@@ -63,3 +65,7 @@
         - @game.players.each do |player|
           %td
             = board.guesses.where(player: player).map(&:score).inject(0, &:+)
+    - if @game.boards.empty?
+      %tr
+        %td{ colspan: @game.players.count + 1 }
+          %i (none yet!)

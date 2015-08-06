@@ -3,7 +3,7 @@ class Game < ActiveRecord::Base
   has_many :boards, dependent: :destroy
 
   def target_score
-    10
+    100
   end
 
   def rounds
