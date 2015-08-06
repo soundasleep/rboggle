@@ -5,11 +5,17 @@ RSpec.describe SubmitGuesses, type: :service do
   let(:player1) { game.players.create! user: user }
   let(:player2) { game.players.create! user: user }
   let(:game) { Game.create! }
-  let(:board) { game.boards.create! round_number: 1, serialized: "empty" }
+  let(:board) { game.boards.create! round_number: 1, serialized: "c,a,t,b|d,o,g,z|z,z,z,z|z,z,z,z" }
   let(:player1_guesses) { board.guesses.where(player: player1) }
   let(:player2_guesses) { board.guesses.where(player: player2) }
 
   let(:args) {{ board: board, player: player, guesses: guesses }}
+
+  before :each do
+    board.save!
+    player1.save!
+    player2.save!
+  end
 
   context "before called" do
     context "player 1s guesses" do
@@ -20,6 +26,10 @@ RSpec.describe SubmitGuesses, type: :service do
 
     it "player 1 has not guessed" do
       expect(player1).to_not be_guessed
+    end
+
+    it "we have at least one player in the board" do
+      expect(board.game.players).to_not be_empty
     end
   end
 
@@ -38,6 +48,10 @@ RSpec.describe SubmitGuesses, type: :service do
 
       it "player 1 has guessed" do
         expect(player1).to be_guessed
+      end
+
+      it "player 2 has not guessed" do
+        expect(player2).to_not be_guessed
       end
 
       context "player 2s guesses" do
@@ -79,6 +93,10 @@ RSpec.describe SubmitGuesses, type: :service do
 
       it "player 1 has guessed" do
         expect(player1).to be_guessed
+      end
+
+      it "player 2 has not guessed" do
+        expect(player2).to_not be_guessed
       end
 
       context "player 2s guesses" do

@@ -84,6 +84,10 @@ RSpec.describe StartGame, type: :service do
               expect(board.cell_at(0,0)).to_not be_empty
             end
 
+            it "has a cell at (3,3)" do
+              expect(board.cell_at(3,3)).to_not be_empty
+            end
+
             it "has a value at (0,0)" do
               expect(board.cell_at(0,0)).to match(/^[a-z]{1,2}$/)
             end
@@ -96,8 +100,12 @@ RSpec.describe StartGame, type: :service do
               expect(board.cells[0].length).to eq(4)
             end
 
-            it "returns the same value through cells and cell_at" do
+            it "returns the same value through cells and cell_at (0,0)" do
               expect(board.cell_at(0,0)).to eq(board.cells[0][0])
+            end
+
+            it "returns the same value through cells and cell_at (1,3)" do
+              expect(board.cell_at(1,3)).to eq(board.cells[3][1])
             end
 
             it "is round 1" do
