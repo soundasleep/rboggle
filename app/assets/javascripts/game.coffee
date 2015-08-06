@@ -4,26 +4,26 @@
 
 intervals = []
 
+checkState = (div) ->
+  throw "no url defined" unless div.dataset["checkUrl"]
+
+  jQuery.ajax
+    url: div.dataset["checkUrl"]
+    success: (data) ->
+      if data.last_board && data.last_board.started?
+        throw "no url defined in response" unless data.last_board.url
+        window.location = data.last_board.url
+
+      if data.players != div.dataset["players"] || data.players_ready != div.dataset["playersReady"]
+        window.location = data.url
+
+    error: (xhr, status, error) ->
+      console.error error
+
 waitForGameToStart = () ->
-  checkState = (div) ->
-    throw "no url defined" unless div.dataset["checkUrl"]
-
-    jQuery.ajax
-      url: div.dataset["checkUrl"]
-      success: (data) ->
-        if data.last_board && data.last_board.started?
-          throw "no url defined in response" unless data.last_board.url
-          window.location = data.last_board.url
-
-        if data.players != div.dataset["players"] || data.players_ready != div.dataset["playersReady"]
-          window.location = data.url
-
-      error: (xhr, status, error) ->
-        console.error error
-
-  $("#wait-for-game-to-start").each (i, e) ->
+  $("#wait-for-game-to-start").each (i, div) ->
     intervals.push window.setInterval( () ->
-        checkState(e)
+        checkState(div)
       , 1 * 1000)
 
 $(document).on 'ready page:update', ->

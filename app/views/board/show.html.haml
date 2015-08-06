@@ -10,6 +10,14 @@
   %dt Started
   %dd= @board.created_at
 
+  - if @board.finished?
+    %dt Finished
+    %dd= @board.finished_at
+
+  - else
+    %dt Seconds left
+    %dd.seconds-left ...
+
 %table.board
   - @board.cells.each do |row|
     %tr
@@ -53,9 +61,15 @@
           %td.score
             = guess.score
 
+    %tfoot
+      %tr
+        %td Total score
+        %td= @guesses.map(&:score).inject(0, &:+)
+
   = link_to "next round", game_path(@game)
 
 - else
-  = form_tag game_board_submit_path(@game, @board) do |f|
-    = text_area_tag "guesses", @guesses.map(&:word).join("\n"), size: "25x10"
-    = submit_tag "Submit"
+  #game-board{ "data-expires" => (@board.created_at + @board.round_length).iso8601 }
+    = form_tag game_board_submit_path(@game, @board) do |f|
+      = text_area_tag "guesses", @guesses.map(&:word).join("\n"), size: "25x10"
+      = submit_tag "Submit"

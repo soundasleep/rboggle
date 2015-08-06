@@ -47,6 +47,10 @@ RSpec.describe EndRound, type: :service do
       it "is not finished" do
         expect(board).to_not be_finished
       end
+
+      it "does not have a finish date" do
+        expect(board.finished_at).to be_nil
+      end
     end
   end
 
@@ -125,6 +129,10 @@ RSpec.describe EndRound, type: :service do
           context "the board" do
             it "is finished" do
               expect(board).to be_finished
+            end
+
+            it "has a finish date" do
+              expect(board.finished_at).to_not be_nil
             end
           end
         end
