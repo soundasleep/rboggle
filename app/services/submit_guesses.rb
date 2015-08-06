@@ -16,7 +16,8 @@ class SubmitGuesses
 
     player.update! guessed: true
 
-    true
+    # possibly end the round
+    EndRound.new(board: board).call
   end
 
   private

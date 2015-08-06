@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150805225339) do
+ActiveRecord::Schema.define(version: 20150805234642) do
 
   create_table "boards", force: :cascade do |t|
     t.integer  "round_number", limit: 4,                   null: false
@@ -25,6 +25,14 @@ ActiveRecord::Schema.define(version: 20150805225339) do
   add_index "boards", ["finished"], name: "index_boards_on_finished", using: :btree
   add_index "boards", ["game_id"], name: "index_boards_on_game_id", using: :btree
   add_index "boards", ["round_number"], name: "index_boards_on_round_number", using: :btree
+
+  create_table "dictionaries", force: :cascade do |t|
+    t.string   "word",       limit: 255, null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  add_index "dictionaries", ["word"], name: "index_dictionaries_on_word", using: :btree
 
   create_table "games", force: :cascade do |t|
     t.boolean  "started",    limit: 1, default: false, null: false

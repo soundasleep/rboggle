@@ -1,20 +1,40 @@
+%h2
+  Round #{@board.round_number}
+  - if @board.finished?
+    (finished)
+
+%dl
+  %dt Started
+  %dd= @board.created_at
+
+%table.board
+  - @board.cells.each do |row|
+    %tr
+      - row.each do |cell|
+        %td.cell= cell
+
+%h3 Your Words
+
 - if @board.finished?
+  %table
+    %thead
+      %tr
+        %th Word
+        %th Score
+    %tbody
+      - @guesses.each do |guess|
+        %tr
+          - if guess.possible?
+            - if guess.unique?
+              %td.unique= guess.word
+            - else
+              %td.exists= guess.word
+          - else
+            %td.impossible= guess.word
+          %td.score
+            = guess.score
 
 - else
-  %h2 Round #{@board.round_number}
-
-  %dl
-    %dt Started
-    %dd= @board.created_at
-
-  %table.board
-    - @board.cells.each do |row|
-      %tr
-        - row.each do |cell|
-          %td.cell= cell
-
-  %h3 Your Words
-
   = form_tag game_board_submit_path(@game, @board) do |f|
     = text_area_tag "guesses", @guesses.map(&:word).join("\n"), size: "25x10"
     = submit_tag "Submit"
