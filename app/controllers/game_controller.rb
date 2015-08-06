@@ -1,4 +1,6 @@
 class GameController < ApplicationController
+  # TODO add authentication filters
+
   def create
     game = find_or_create_game(current_user)
 
@@ -11,10 +13,12 @@ class GameController < ApplicationController
 
     respond_to do |format|
       format.html do
+        # TODO move this out
         if @game.started?
           board = @game.boards.last
 
           if !board.finished?
+            # TODO but do not move this out of format.html
             redirect_to game_board_path(@game, board)
           end
         end

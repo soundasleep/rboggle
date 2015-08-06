@@ -3,6 +3,8 @@ class Board < ActiveRecord::Base
 
   belongs_to :game
 
+  # TODO add presence validators
+
   def width
     4
   end

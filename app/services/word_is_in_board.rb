@@ -33,6 +33,7 @@ class WordIsInBoard
 
           (-1..1).each do |dy|
             (-1..1).each do |dx|
+              # TODO maybe replace with valid(x, y)
               if x + dx >= 0 && y + dy >= 0 && x + dx < board.width && y + dy < board.height
                 if !visited[y + dy][x + dx]
                   c = board.cell_at(x + dx, y + dy)

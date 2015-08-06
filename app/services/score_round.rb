@@ -23,6 +23,8 @@ class ScoreRound
 
   def check_all_guesses_are_in_dictionary
     board.guesses.each do |guess|
+      # TODO check for plural/singular
+      # alternative: load plural/singular in word loading?
       guess.update! in_dictionary: Dictionary.where(word: guess.word).any?
     end
   end
