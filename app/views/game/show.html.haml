@@ -31,3 +31,23 @@
         %td.score
           = player.score
 
+%h2 Recent rounds
+
+%table.recent-rounds
+  %thead
+    %tr
+      %th Round
+      - @game.players.each do |player|
+        %th
+          = player.user.name
+          - if @player == player
+            %i (you!)
+
+  %tbody
+    - @game.boards.order(round_number: :desc).each do |board|
+      %tr
+        %td
+          = link_to "Round #{board.round_number}", game_board_path(@game, board)
+        - @game.players.each do |player|
+          %td
+            = board.guesses.where(player: player).map(&:score).inject(0, &:+)
