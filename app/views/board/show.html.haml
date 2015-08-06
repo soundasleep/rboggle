@@ -1,4 +1,7 @@
 %h2
+  %small
+    = link_to "Game #{@game.id}", game_path(@game)
+    >
   Round #{@board.round_number}
   - if @board.finished?
     (finished)

@@ -18,6 +18,9 @@ class SubmitGuesses
 
     # possibly end the round
     EndRound.new(board: board).call
+
+    # possibly end the game
+    FinishGame.new(game: board.game).call
   end
 
   private

@@ -1,18 +1,28 @@
-%h2 Waiting for players...
+- if @game.finished?
+  %h2 Game over
 
-%ul
-  - @game.players.each do |player|
-    %li
-      = player.ready? ? "ready" : "not ready"
-      = player.user.name
-
-- if @player.ready?
-  = form_tag game_not_ready_path(@game) do |f|
-    = submit_tag "Not ready"
-
+  %h3
+    - winning_player = @game.players.order(score: :desc).first
+    = winning_player.user.name
+    - if @player == winning_player
+      %i (you!)
+    is the winner!
 - else
-  = form_tag game_ready_path(@game) do |f|
-    = submit_tag "Ready"
+  %h2 Waiting for players...
+
+  %ul
+    - @game.players.each do |player|
+      %li
+        = player.ready? ? "ready" : "not ready"
+        = player.user.name
+
+  - if @player.ready?
+    = form_tag game_not_ready_path(@game) do |f|
+      = submit_tag "Not ready"
+
+  - else
+    = form_tag game_ready_path(@game) do |f|
+      = submit_tag "Ready"
 
 %h2 Score board
 
@@ -30,6 +40,8 @@
             %i (you!)
         %td.score
           = player.score
+
+%i First to #{@game.target_score} wins!
 
 %h2 Recent rounds
 
