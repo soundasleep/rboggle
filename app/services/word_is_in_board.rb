@@ -17,12 +17,14 @@ class WordIsInBoard
 
         # first characters
         c = board.cell_at(x, y)
+
         if remaining[0, c.length] == c
           remaining = remaining.slice(c.length, remaining.length)
           visited[y][x] = true
 
           return true if remaining.empty?
         else
+          # this x,y doesn't start the word
           next
         end
 
@@ -33,16 +35,16 @@ class WordIsInBoard
 
           (-1..1).each do |dy|
             (-1..1).each do |dx|
-              # TODO maybe replace with valid(x, y)
-              if x + dx >= 0 && y + dy >= 0 && x + dx < board.width && y + dy < board.height
+              if valid?(x + dx, y + dy)
                 if !visited[y + dy][x + dx]
                   c = board.cell_at(x + dx, y + dy)
+
                   if remaining[0, c.length] == c
                     remaining = remaining.slice(c.length, remaining.length)
                     visited[y + dy][x + dx] = true
 
-                    x = x + dx
-                    y = y + dy
+                    x += dx
+                    y += dy
 
                     # we've found a match
                     if remaining.empty?
@@ -68,6 +70,10 @@ class WordIsInBoard
     board.cells.map do |row|
       row.map { false }
     end
+  end
+
+  def valid?(x, y)
+    x >= 0 && y >= 0 && x < board.width && y < board.height
   end
 
 end

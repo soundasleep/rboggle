@@ -10,17 +10,14 @@ class GameController < ApplicationController
   def show
     @game = find_game
     @player = find_player
+    if @game.started?
+      board = @game.boards.last
+    end
 
     respond_to do |format|
       format.html do
-        # TODO move this out
-        if @game.started?
-          board = @game.boards.last
-
-          if !board.finished?
-            # TODO but do not move this out of format.html
-            redirect_to game_board_path(@game, board)
-          end
+        if board && !board.finished?
+          redirect_to game_board_path(@game, board)
         end
       end
       format.json { render :json => GamePresenter.new(@game).to_json }

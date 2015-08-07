@@ -36,30 +36,14 @@
     %tbody
       - @guesses.sort_by(&:word).each do |guess|
         %tr
-          - if guess.checked?
-            - if guess.possible?
-              - if guess.unique?
-                - if guess.in_dictionary?
-                  %td.unique
-                    / TODO link through to the wiktionary definition if in_dictionary
-                    = guess.word
-                    %i (unique)
-                - else
-                  %td.not-in-dictionary
-                    = guess.word
-                    %i (not in dictionary)
-              - else
-                %td.exists
-                  = guess.word
-                  %i (already guessed)
+          %td{ class: guess_classes(guess) }
+            - if guess.in_dictionary?
+              = link_to guess.word, "https://en.wiktionary.org/wiki/#{guess.word}"
             - else
-              %td.impossible
-                = guess.word
-                %i (not possible)
-          - else
-            %td.not-checked
               = guess.word
-              %i (not checked)
+
+            - if !guess.unique?
+              (#{pluralize(@board.guesses.where(word: guess.word).count, "person")} guessed)
           %td.score
             = guess.score
 
