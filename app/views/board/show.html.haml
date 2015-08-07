@@ -16,7 +16,7 @@
 
   - else
     %dt Seconds left
-    %dd.seconds-left ...
+    %dd.seconds-left (loading)
 
 %table.board
   - @board.cells.each do |row|
@@ -34,13 +34,14 @@
         %th Word
         %th Score
     %tbody
-      - @guesses.each do |guess|
+      - @guesses.sort_by(&:word).each do |guess|
         %tr
           - if guess.checked?
             - if guess.possible?
               - if guess.unique?
                 - if guess.in_dictionary?
                   %td.unique
+                    / TODO link through to the wiktionary definition if in_dictionary
                     = guess.word
                     %i (unique)
                 - else
