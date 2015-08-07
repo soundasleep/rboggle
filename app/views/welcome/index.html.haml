@@ -4,5 +4,17 @@
   = form_tag game_index_path, method: :create do |f|
     = submit_tag "Play a game"
 
+    %i.tip
+      = pluralize(waiting_games.count, "game")
+      waiting to start
+
+  %h2 Your games
+
+  %ul
+    - your_games.each do |game|
+      %li
+        = link_to pluralize(game.players.count, "player"), game_path(game)
+        = pluralize(game.rounds, "round")
+
 - else
   %p You need to login first.

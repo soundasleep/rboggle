@@ -17,6 +17,10 @@ class Board < ActiveRecord::Base
     3.minutes
   end
 
+  def expires_at
+    created_at + round_length
+  end
+
   def cells
     serialized.split("|").map{ |row| row.split(",") }
   end

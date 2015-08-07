@@ -55,8 +55,7 @@
   = link_to "next round", game_path(@game)
 
 - else
-  / TODO move expires into board model
-  #game-board{ "data-expires" => (@board.created_at + @board.round_length).iso8601 }
+  #game-board{ "data-expires" => @board.expires_at.iso8601 }
     = form_tag game_board_submit_path(@game, @board) do |f|
       = text_area_tag "guesses", @guesses.map(&:word).join("\n"), size: "25x10"
       = submit_tag "Submit"

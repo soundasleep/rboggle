@@ -68,7 +68,6 @@ RSpec.describe StartGame, type: :service do
             end
 
             it "has cells" do
-              # TODO this will return an array of Cells (a Concept) each with x,y
               expect(board.cells).to_not be_empty
             end
 
