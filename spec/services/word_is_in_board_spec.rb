@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe WordIsInBoard, type: :service do
   let(:game) { Game.create! }
-  let(:board) { game.boards.create! round_number: 1, finished: true, serialized: "c,a,t,b|d,o,g,z|z,z,z,z|qu,z,q,z" }
+  let(:board) { game.boards.create! round_number: 1, finished: true, serialized: "c,a,t,b|d,o,g,a|z,z,p,a|qu,z,q,l" }
   let(:result) { WordIsInBoard.new(board: board, word: word).call }
 
   context "cat" do
@@ -15,6 +15,14 @@ RSpec.describe WordIsInBoard, type: :service do
 
   context "dog" do
     let(:word) { "dog" }
+
+    it "returns true" do
+      expect(result).to be(true)
+    end
+  end
+
+  context "pal" do
+    let(:word) { "pal" }
 
     it "returns true" do
       expect(result).to be(true)
