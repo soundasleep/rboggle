@@ -3,7 +3,7 @@ class Board < ActiveRecord::Base
 
   belongs_to :game
 
-  # TODO add presence validators
+  validates :round_number, :serialized, :game, presence: true
 
   def width
     4
