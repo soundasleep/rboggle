@@ -1,5 +1,5 @@
 class GameController < ApplicationController
-  # TODO add authentication filters
+  before_filter :authenticate
 
   def create
     game = find_or_create_game(current_user)

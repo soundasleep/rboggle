@@ -1,4 +1,6 @@
 class BoardController < ApplicationController
+  before_filter :authenticate
+
   def show
     @game = find_game
     @board = find_board
