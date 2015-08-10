@@ -14,7 +14,7 @@ checkState = (div) ->
         throw "no url defined in response" unless data.last_board.url
         window.location = data.last_board.url
 
-      if data.players != div.dataset["players"] || data.players_ready != div.dataset["playersReady"]
+      if data.players != parseInt(div.dataset["players"], 10) || data.players_ready != parseInt(div.dataset["playersReady"], 10)
         window.location = data.url
 
     error: (xhr, status, error) ->
