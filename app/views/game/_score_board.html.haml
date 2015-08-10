@@ -1,0 +1,18 @@
+%h2 Score board
+
+%table.score-board
+  %thead
+    %tr
+      %th Player
+      %th Score
+  %tbody
+    - @game.players.order(score: :desc).each do |player|
+      %tr
+        %td.name
+          = player.user.name
+          - if @player == player
+            %i (you!)
+        %td.score
+          = player.score
+
+%i First to #{@game.target_score} wins!

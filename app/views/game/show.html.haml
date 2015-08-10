@@ -26,47 +26,6 @@
 
   #wait-for-game-to-start{ GamePresenter.new(@game).to_data_set }
 
-%h2 Score board
+= render partial: "score_board"
 
-/ TODO split into partials
-%table.score-board
-  %thead
-    %tr
-      %th Player
-      %th Score
-  %tbody
-    - @game.players.order(score: :desc).each do |player|
-      %tr
-        %td.name
-          = player.user.name
-          - if @player == player
-            %i (you!)
-        %td.score
-          = player.score
-
-%i First to #{@game.target_score} wins!
-
-%h2 Recent rounds
-
-%table.recent-rounds
-  %thead
-    %tr
-      %th Round
-      - @game.players.each do |player|
-        %th
-          = player.user.name
-          - if @player == player
-            %i (you!)
-
-  %tbody
-    - @game.boards.order(round_number: :desc).each do |board|
-      %tr
-        %td
-          = link_to "Round #{board.round_number}", game_board_path(@game, board)
-        - @game.players.each do |player|
-          %td
-            = board.guesses.where(player: player).map(&:score).inject(0, &:+)
-    - if @game.boards.empty?
-      %tr
-        %td{ colspan: @game.players.count + 1 }
-          %i (none yet!)
+= render partial: "recent_rounds"

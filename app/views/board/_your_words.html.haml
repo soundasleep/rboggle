@@ -1,0 +1,34 @@
+%h3 Your Words
+
+- if @board.finished?
+  %table
+    %thead
+      %tr
+        %th Word
+        %th Score
+    %tbody
+      - @guesses.sort_by(&:word).each do |guess|
+        %tr
+          %td{ class: guess_classes(guess) }
+            - if guess.in_dictionary?
+              = link_to guess.word, "https://en.wiktionary.org/wiki/#{guess.word}"
+            - else
+              = guess.word
+
+            - if !guess.unique?
+              (#{pluralize(@board.guesses.where(word: guess.word).count, "person")} guessed)
+          %td.score
+            = guess.score
+
+    %tfoot
+      %tr
+        %td Total score
+        %td= @guesses.map(&:score).inject(0, &:+)
+
+  = link_to "next round", game_path(@game)
+
+- else
+  #game-board{ "data-expires" => @board.expires_at.iso8601 }
+    = form_tag game_board_submit_path(@game, @board) do |f|
+      = text_area_tag "guesses", @guesses.map(&:word).join("\n"), size: "25x10"
+      = submit_tag "Submit"
