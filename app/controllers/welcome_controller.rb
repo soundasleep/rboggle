@@ -2,8 +2,7 @@ class WelcomeController < ApplicationController
   def index
   end
 
-  helper_method :waiting_games
-  helper_method :your_games
+  helper_method :waiting_games, :your_games, :active_games, :finished_games
 
   private
 
@@ -13,7 +12,15 @@ class WelcomeController < ApplicationController
 
   def your_games
     current_user.players.order(created_at: :desc)
-        .select{ |p| !p.game.finished? }
+  end
+
+  def active_games
+    your_games.select{ |p| !p.game.finished? }
+        .map(&:game)
+  end
+
+  def finished_games
+    your_games.select{ |p| p.game.finished? }
         .map(&:game)
   end
 end

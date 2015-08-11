@@ -1,20 +1,40 @@
-%h1 Boggle
+.welcome
+  %h1 Boggle
 
-- if current_user
-  = form_tag game_index_path, method: :create do |f|
-    = submit_tag "Play a game"
+  %p.description
+    A multiplayer
+    = link_to "open source", "https://github.com/soundasleep/rboggle"
+    implementation of Boggle in Ruby on Rails.
 
-    %i.tip
-      = pluralize(waiting_games.count, "game")
-      waiting to start
+  - if current_user
+    = form_tag game_index_path, method: :create do |f|
+      = submit_tag "Play a game"
 
-  %h2 Your games
+      %i.tip
+        = pluralize(waiting_games.count, "game")
+        waiting to start
 
-  %ul
-    - your_games.each do |game|
-      %li
-        = link_to pluralize(game.players.count, "player"), game_path(game)
-        = pluralize(game.rounds, "round")
+    %h2 Active games
 
-- else
-  %p You need to login first.
+    %ul
+      - active_games.each do |game|
+        %li
+          = link_to pluralize(game.players.count, "player"), game_path(game)
+          = pluralize(game.rounds, "round")
+      - if active_games.empty?
+        %li.empty
+          %i (none)
+
+    %h2 Finished games
+
+    %ul
+      - finished_games.each do |game|
+        %li
+          = link_to pluralize(game.players.count, "player"), game_path(game)
+          = pluralize(game.rounds, "round")
+      - if finished_games.empty?
+        %li.empty
+          %i (none)
+
+  - else
+    %p You need to login first.

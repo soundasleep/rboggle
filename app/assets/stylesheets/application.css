@@ -12,6 +12,7 @@
  *
  *= require "_reset"
  *= require "_nav"
+ *= require "_welcome"
  *= require "_board"
  *= require "_game"
  *= require_self

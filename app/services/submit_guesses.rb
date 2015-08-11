@@ -23,6 +23,4 @@ class SubmitGuesses
     FinishGame.new(game: board.game).call
   end
 
-  private
-
 end

@@ -12,6 +12,21 @@ class WordIsInBoard
 
   private
 
+  def all_possible_search_trees
+    (0...board.height).map do |start_y|
+      (0...board.width).map do |start_x|
+        SearchTree.new(board: board, visited: empty_visited, x: start_x, y: start_y)
+      end
+    end.flatten
+  end
+
+  def empty_visited
+    board.cells.map do |row|
+      row.map { false }
+    end
+  end
+
+  # TODO should this inner class be moved somewhere? where?
   class SearchTree
     attr_reader :board, :visited, :x, :y
 
@@ -50,20 +65,6 @@ class WordIsInBoard
 
     def cell_string
       board.cell_at(x, y)
-    end
-  end
-
-  def all_possible_search_trees
-    (0...board.height).map do |start_y|
-      (0...board.width).map do |start_x|
-        SearchTree.new(board: board, visited: empty_visited, x: start_x, y: start_y)
-      end
-    end.flatten
-  end
-
-  def empty_visited
-    board.cells.map do |row|
-      row.map { false }
     end
   end
 
