@@ -2,7 +2,6 @@ language: ruby
 rvm:
   - 2.2.0
 before_script:
-  - mysql -e 'create database rboggle_development;'
   - mysql -e 'create database rboggle_test;'
 addons:
   code_climate:
