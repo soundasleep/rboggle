@@ -3,6 +3,7 @@ rvm:
   - 2.2.0
 before_script:
   - mysql -e 'create database rboggle_development;'
+  - mysql -e 'create database rboggle_test;'
 addons:
   code_climate:
     repo_token: b2f99fed842a7dd2730d2f08752e4a57334dfcebb9eb476bae6b18ae2429aaca bundle exec rake
