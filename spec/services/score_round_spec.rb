@@ -5,7 +5,7 @@ RSpec.describe ScoreRound, type: :service do
   let(:player1) { game.players.create! user: user }
   let(:player2) { game.players.create! user: user }
   let(:game) { Game.create! }
-  let(:board) { game.boards.create! round_number: 1, finished: true, serialized: "c,a,t,b|d,o,g,z|z,z,z,z|z,z,z,z" }
+  let(:board) { game.boards.create! round_number: 1, finished: true, serialized: "c,a,t,b|d,o,g,z|s,z,z,z|z,z,z,z" }
 
   let(:args) {{ board: board }}
 
@@ -15,11 +15,14 @@ RSpec.describe ScoreRound, type: :service do
     player1.save!
     player2.save!
 
+    Dictionary.create! word: "at"
     Dictionary.create! word: "bat"
     Dictionary.create! word: "cat"
     Dictionary.create! word: "coat"
     Dictionary.create! word: "dog"
     Dictionary.create! word: "invalid"
+    Dictionary.create! word: "toads"
+    Dictionary.create! word: "toadsz"
   end
 
   context "before called" do
@@ -275,7 +278,7 @@ RSpec.describe ScoreRound, type: :service do
     context "after called" do
       before { ScoreRound.new(board: board).call }
 
-      context "the 'invalid' guess" do
+      context "the 'coat' guess" do
         let(:guess) { board.guesses.where(player: player1, word: "coat").first }
 
         it "is checked" do
@@ -296,6 +299,107 @@ RSpec.describe ScoreRound, type: :service do
 
         it "has a score of 1" do
           expect(guess.score).to eq(1)
+        end
+      end
+    end
+  end
+
+  context "with player 1 submitting toads" do
+    before {
+      board.guesses.create! player: player1, word: "toads"
+    }
+
+    context "after called" do
+      before { ScoreRound.new(board: board).call }
+
+      context "the 'toads' guess" do
+        let(:guess) { board.guesses.where(player: player1, word: "toads").first }
+
+        it "is checked" do
+          expect(guess).to be_checked
+        end
+
+        it "is in dictionary" do
+          expect(guess).to be_in_dictionary
+        end
+
+        it "is possible" do
+          expect(guess).to be_possible
+        end
+
+        it "is unique" do
+          expect(guess).to be_unique
+        end
+
+        it "has a score of 2" do
+          expect(guess.score).to eq(2)
+        end
+      end
+    end
+  end
+  context "with player 1 submitting toadsz" do
+    before {
+      board.guesses.create! player: player1, word: "toadsz"
+    }
+
+    context "after called" do
+      before { ScoreRound.new(board: board).call }
+
+      context "the 'toadsz' guess" do
+        let(:guess) { board.guesses.where(player: player1, word: "toadsz").first }
+
+        it "is checked" do
+          expect(guess).to be_checked
+        end
+
+        it "is in dictionary" do
+          expect(guess).to be_in_dictionary
+        end
+
+        it "is possible" do
+          expect(guess).to be_possible
+        end
+
+        it "is unique" do
+          expect(guess).to be_unique
+        end
+
+        it "has a score of 3" do
+          expect(guess.score).to eq(3)
+        end
+      end
+    end
+  end
+
+  context "with player 1 submitting at" do
+    before {
+      board.guesses.create! player: player1, word: "at"
+    }
+
+    context "after called" do
+      before { ScoreRound.new(board: board).call }
+
+      context "the 'at' guess" do
+        let(:guess) { board.guesses.where(player: player1, word: "at").first }
+
+        it "is checked" do
+          expect(guess).to be_checked
+        end
+
+        it "is in dictionary" do
+          expect(guess).to be_in_dictionary
+        end
+
+        it "is possible" do
+          expect(guess).to be_possible
+        end
+
+        it "is unique" do
+          expect(guess).to be_unique
+        end
+
+        it "has a score of 0" do
+          expect(guess.score).to eq(0)
         end
       end
     end
