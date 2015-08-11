@@ -69,6 +69,10 @@ group :development do
   gem "rb-fsevent",              :require => false
 end
 
+group :test do
+  gem "codeclimate-test-reporter", require: nil
+end
+
 # Bower assets
 source "https://rails-assets.org" do
   gem "rails-assets-timecircles"
