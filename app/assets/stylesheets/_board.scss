@@ -11,12 +11,11 @@
       display: inline-block;
       float: left;
       margin: 0;
-      margin-right: 20px;
     }
 
     dt {
       clear: left;
-      width: 10%;
+      width: 20%;
     }
 
     dt {
@@ -27,6 +26,7 @@
   .game-board {
     width: 50%;
     float: left;
+    margin-top: 20px;
 
     .game-board-cells {
       min-width: auto;
@@ -143,4 +143,17 @@
       }
     }
   }
+
+  .timer {
+    height: 75px;
+    float: right;
+    display: inline-block;
+
+    .time_circles {
+      .textDiv_Seconds {
+        display: none;
+      }
+    }
+  }
+
 }

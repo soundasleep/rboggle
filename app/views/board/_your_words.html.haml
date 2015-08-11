@@ -45,3 +45,7 @@
         = text_area_tag "guesses", @guesses.map(&:word).join("\n"), size: "25x10"
         .actions
           = submit_tag "Submit"
+
+    = render partial: "timer"
+
+

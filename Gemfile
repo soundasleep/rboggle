@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+gem 'bundler', '>= 1.8.4'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.2'
@@ -66,4 +67,9 @@ group :development do
   gem "guard-livereload",        :require => false
   gem "rack-livereload"
   gem "rb-fsevent",              :require => false
+end
+
+# Bower assets
+source "https://rails-assets.org" do
+  gem "rails-assets-timecircles"
 end
