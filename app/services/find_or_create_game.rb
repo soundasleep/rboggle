@@ -1,3 +1,4 @@
+# TODO rename to JoinGame?
 class FindOrCreateGame
   attr_reader :user
 
@@ -6,6 +7,7 @@ class FindOrCreateGame
   end
 
   def call
+    # TODO add locks
     game = existing_game || create_game
 
     # only create a new player for unique users
@@ -19,6 +21,9 @@ class FindOrCreateGame
   private
 
   def existing_game
+    # TODO rename to Game scope
+    # Game.waiting_for_players? Game.not_started?
+    # TODO remove finished: false
     Game.where(started: false, finished: false).first
   end
 

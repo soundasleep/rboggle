@@ -23,6 +23,9 @@ class ScoreRound
 
   def check_all_guesses_are_in_dictionary
     board.guesses.each do |guess|
+      # TODO load dictionary into local set rather than n queries
+      # apparently 300k+ words are OK
+      # lets try!
       guess.update! in_dictionary: Dictionary.where(word: guess.word).any?
     end
   end
@@ -43,7 +46,8 @@ class ScoreRound
 
   def update_guess_scores
     board.guesses.each do |guess|
-      if guess.unique? and guess.in_dictionary? and guess.possible?
+      if guess.unique? && guess.in_dictionary? && guess.possible?
+        # TODO refactor out into score_for_word method
         guess.update! score: case guess.word.length
           when 0, 1, 2
             0

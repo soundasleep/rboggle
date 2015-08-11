@@ -22,6 +22,8 @@ class Board < ActiveRecord::Base
   end
 
   def cells
+    # TODO rename to serialized_cells?
+    # TODO cache?
     serialized.split("|").map{ |row| row.split(",") }
   end
 

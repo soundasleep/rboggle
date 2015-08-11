@@ -15,6 +15,7 @@ Dir[File.dirname(__FILE__) + "/../dict/*"].map do |file|
   puts "Loading #{file}..."
 
   File.open(file, "r") do |f|
+    # TODO file.read_lines
     f.each_line do |line|
       line.scrub!("_").strip!   # ignore invalid UTF characters as necessary
       if line.match(/^[a-z]+$/)
