@@ -5,16 +5,20 @@
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
+    %link{ href: "http://fonts.googleapis.com/css?family=Crimson+Text:400,400italic,700,700italic", rel: "stylesheet", type: "text/css" }
+    %link{ href: "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css", rel: "stylesheet", type: "text/css" }
 
   %body
     %nav
-      = link_to "Rboggle", root_path
-      - if current_user
-        Logged in as
-        = current_user.name
-        = link_to "Log out", logout_path
-      - else
-        = link_to "Log in", login_path
+      %ul.navigation
+        %li.home= link_to "Rboggle", root_path
+        - if current_user
+          %li.user
+            Logged in as
+            %i= current_user.name
+          %li.logout= link_to "Log out", logout_path
+        - else
+          %li.login= link_to "Log in", login_path
 
     - if flash.alert
       .flash.alert=flash.alert
@@ -22,4 +26,5 @@
     - if flash.notice
       .flash.notice=flash.notice
 
-    = yield
+    .content
+      = yield

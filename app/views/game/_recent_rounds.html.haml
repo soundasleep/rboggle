@@ -1,24 +1,26 @@
-%h2 Recent rounds
+.recent-rounds
+  %h2 Recent rounds
 
-%table.recent-rounds
-  %thead
-    %tr
-      %th Round
-      - @game.players.each do |player|
-        %th
-          = player.user.name
-          - if @player == player
-            %i (you!)
-
-  %tbody
-    - @game.boards.order(round_number: :desc).each do |board|
+  %table.recent-rounds
+    %thead
       %tr
-        %td
-          = link_to "Round #{board.round_number}", game_board_path(@game, board)
+        %th Round
         - @game.players.each do |player|
+          %th
+            - if @player == player
+              %i You!
+            - else
+              = player.user.name
+
+    %tbody
+      - @game.boards.order(round_number: :desc).limit(5).each do |board|
+        %tr
           %td
-            = board.guesses.where(player: player).map(&:score).inject(0, &:+)
-    - if @game.boards.empty?
-      %tr
-        %td{ colspan: @game.players.count + 1 }
-          %i (none yet!)
+            = link_to "Round #{board.round_number}", game_board_path(@game, board)
+          - @game.players.each do |player|
+            %td
+              = board.guesses.where(player: player).map(&:score).inject(0, &:+)
+      - if @game.boards.empty?
+        %tr
+          %td{ colspan: @game.players.count + 1 }
+            %i (none yet!)

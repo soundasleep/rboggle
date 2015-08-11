@@ -1,0 +1,57 @@
+@import "_variables";
+
+.game {
+  &.game-waiting {
+    h2 {
+      text-align: center;
+      margin: 10px 0;
+    }
+
+    .player-list {
+      margin: 0;
+      padding: 0;
+      line-height: 150%;
+      font-size: 150%;
+      list-style: none;
+
+      .player {
+        .fa {
+          margin-right: 5px;
+        }
+
+        &.ready {
+          .fa {
+            color: $green;
+          }
+        }
+
+        &.not-ready {
+          .fa {
+            color: $red;
+          }
+
+          color: $grey;
+        }
+      }
+    }
+
+    .actions {
+      margin: 20px;
+
+      form.ready-form {
+        float: right;
+      }
+    }
+
+    .score-board, .recent-rounds {
+      clear: both;
+    }
+
+    .score-board {
+      .target-score {
+        font-style: italic;
+        text-align: center;
+      }
+    }
+  }
+}

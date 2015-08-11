@@ -1,31 +1,37 @@
 - if @game.finished?
-  %h2 Game over
+  .game.game-finished
+    %h2 Game over
 
-  %h3
-    - winning_player = @game.players.order(score: :desc).first
-    = winning_player.user.name
-    - if @player == winning_player
-      %i (you!)
-    is the winner!
+    %h3
+      - winning_player = @game.players.order(score: :desc).first
+      = winning_player.user.name
+      - if @player == winning_player
+        %i (you!)
+      is the winner!
 - else
-  %h2 Waiting for players...
+  .game.game-waiting
+    %h2 Waiting for players...
 
-  %ul
-    - @game.players.each do |player|
-      %li
-        = player.ready? ? "ready" : "not ready"
-        = player.user.name
+    %ul.player-list
+      - @game.players.each do |player|
+        %li.player{ class: player.ready? ? "ready" : "not-ready" }
+          - if player.ready?
+            %i.fa.fa-check-circle
+          - else
+            %i.fa.fa-times-circle
+          = player.user.name
 
-  - if @player.ready?
-    = form_tag game_not_ready_path(@game) do |f|
-      = submit_tag "Not ready"
+    .actions
+      - if @player.ready?
+        = form_tag game_not_ready_path(@game), class: "ready-form" do |f|
+          = submit_tag "I'm not ready"
 
-  - else
-    = form_tag game_ready_path(@game) do |f|
-      = submit_tag "Ready"
+      - else
+        = form_tag game_ready_path(@game), class: "ready-form" do |f|
+          = submit_tag "I'm ready"
 
-  #wait-for-game-to-start{ GamePresenter.new(@game).to_data_set }
+    #wait-for-game-to-start{ GamePresenter.new(@game).to_data_set }
 
-= render partial: "score_board"
+    = render partial: "score_board"
 
-= render partial: "recent_rounds"
+    = render partial: "recent_rounds"

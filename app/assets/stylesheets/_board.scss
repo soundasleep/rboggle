@@ -1,0 +1,146 @@
+@import "_variables";
+
+.board {
+  h2 {
+    text-align: center;
+    margin: 10px 0;
+  }
+
+  dl {
+    dt, dd {
+      display: inline-block;
+      float: left;
+      margin: 0;
+      margin-right: 20px;
+    }
+
+    dt {
+      clear: left;
+      width: 10%;
+    }
+
+    dt {
+      font-weight: bold;
+    }
+  }
+
+  .game-board {
+    width: 50%;
+    float: left;
+
+    .game-board-cells {
+      min-width: auto;
+      border-collapse: initial;
+      border: 0;
+      float: right;
+
+      td {
+        font-weight: bold;
+        text-align: center;
+        text-transform: uppercase;
+        font-size: 300%;
+        background: white;
+
+        padding-top: 20px;
+        line-height: 100%;
+
+        min-width: 48px;
+        min-height: 48px;
+        border: 1px solid $grey;
+        border-radius: 20px;
+      }
+    }
+  }
+
+  .your-words {
+    float: right;
+    width: 45%;
+
+    h3 {
+      text-align: center;
+      margin: 0;
+    }
+
+    .word {
+      text-decoration: line-through;
+      display: inline-block;
+      color: $grey;
+      font-style: italic;
+
+      a {
+        text-decoration: none;
+        color: mix($grey, $blue);
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+
+    .possible {
+      .word {
+        text-decoration: none;
+        color: black;
+        font-style: normal;
+
+        a {
+          text-decoration: underline;
+          color: $blue;
+
+          &:hover {
+            text-decoration: none;
+          }
+        }
+      }
+    }
+
+    .guess-status {
+      width: 20px;
+      height: 10px;
+      display: inline-block;
+      font-size: 80%;
+
+      &.fa-check {
+        color: $green;
+      }
+      &.fa-times {
+        color: $red;
+      }
+
+      &.nothing {
+        padding-left: 2px;
+        width: 18px;
+      }
+    }
+  }
+
+  .game-stats {
+    clear: both;
+    padding-top: 20px;
+  }
+
+  #game-board {
+    textarea {
+      width: 100%;
+      font-size: 150%;
+      font-family: "Consolas", monospace;
+    }
+  }
+
+  .actions {
+    margin: 20px 0;
+
+    form#game-board, .next-round, input[type=submit] {
+      float: right;
+    }
+
+    .next-round {
+      .fa {
+        font-size: 60%;
+        margin-left: 2px;
+        margin-bottom: 2px;
+        vertical-align: middle;
+      }
+    }
+  }
+}

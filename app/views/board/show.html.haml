@@ -1,27 +1,29 @@
-%h2
-  %small
-    = link_to "Game #{@game.id}", game_path(@game)
-    >
-  Round #{@board.round_number}
-  - if @board.finished?
-    (finished)
+.board
+  %h2
+    %small
+      = link_to "Game #{@game.id}", game_path(@game)
+      >
+    Round #{@board.round_number}
+    - if @board.finished?
+      (finished)
 
-%dl
-  %dt Started
-  %dd= @board.created_at
+  .game-board
+    %table.game-board-cells
+      - @board.cells.each do |row|
+        %tr
+          - row.each do |cell|
+            %td.cell= cell
 
-  - if @board.finished?
-    %dt Finished
-    %dd= @board.finished_at
+  = render partial: "your_words"
 
-  - else
-    %dt Seconds left
-    %dd.seconds-left (loading)
+  %dl.game-stats
+    %dt Started
+    %dd= @board.created_at
 
-%table.board
-  - @board.cells.each do |row|
-    %tr
-      - row.each do |cell|
-        %td.cell= cell
+    - if @board.finished?
+      %dt Finished
+      %dd= @board.finished_at
 
-= render partial: "your_words"
+    - else
+      %dt Seconds left
+      %dd.seconds-left (loading)
