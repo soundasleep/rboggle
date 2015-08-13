@@ -11,6 +11,6 @@ class Game < ActiveRecord::Base
   end
 
   def ready_to_start?
-    players.all?(&:ready?) && (players.count >= 2)  # TODO use .length since .all? has already loaded all records in SQL
+    players.all?(&:ready?) && players.length >= 2
   end
 end
