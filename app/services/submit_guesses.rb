@@ -8,8 +8,7 @@ class SubmitGuesses
   end
 
   def call
-    # TODO replace with destroy_all (performance)
-    @board.guesses.where(player: player).delete_all
+    @board.guesses.where(player: player).destroy_all
 
     # TODO replace split.reject with just split()
     guesses.split(/[\s+]/).reject(&:empty?).uniq.each do |guess|
