@@ -27,7 +27,6 @@ class WordIsInBoard
     end
   end
 
-  # TODO should this inner class be moved somewhere? where?
   class SearchTree
     attr_reader :board, :visited, :x, :y
 
@@ -39,11 +38,7 @@ class WordIsInBoard
     end
 
     def has_word?(word)
-      # TODO move all_valid..* into something_good method
-      word.start_with?(cell_string) && all_valid_search_trees.any? do |tree|
-          remaining = word.slice(cell_string.length, word.length)
-          remaining.empty? || tree.has_word?(remaining)
-        end
+      word.start_with?(cell_string) && has_a_search_tree(remaining(word))
     end
 
     private
@@ -68,6 +63,17 @@ class WordIsInBoard
     def cell_string
       board.cell_at(x, y)
     end
+
+    def remaining(word)
+      word.slice(cell_string.length, word.length)
+    end
+
+    def has_a_search_tree(remaining)
+      all_valid_search_trees.any? do |tree|
+        remaining.empty? || tree.has_word?(remaining)
+      end
+    end
+
   end
 
 end
