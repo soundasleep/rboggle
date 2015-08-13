@@ -7,6 +7,7 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 words = 0
+loaded = []
 
 # load the dictionary
 # this can be updated from http://wordlist.aspell.net/
@@ -15,12 +16,12 @@ Dir[File.dirname(__FILE__) + "/../dict/*"].map do |file|
   puts "Loading #{file}..."
 
   File.open(file, "r") do |f|
-    # TODO file.read_lines
     f.each_line do |line|
       line.scrub!("_").strip!   # ignore invalid UTF characters as necessary
-      if line.match(/^[a-z]+$/)
+      if line.match(/^[a-z]+$/) && !loaded.include?(line)
         words += 1
         Dictionary.create! word: line
+        loaded << line
 
         if words % 1000 == 0
           puts "Loaded #{words} words... (#{line})"
