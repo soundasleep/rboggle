@@ -51,24 +51,27 @@ class ScoreRound
   def update_guess_scores
     board.guesses.each do |guess|
       if guess.unique? && guess.in_dictionary? && guess.possible?
-        # TODO refactor out into score_for_word method
-        guess.update! score: case guess.word.length
-          when 0, 1, 2
-            0
-          when 3, 4
-            1
-          when 5
-            2
-          when 6
-            3
-          when 7
-            5
-          else
-            11
-        end
+        guess.update! score: score_for_word(guess.word)
       else
         guess.update! score: 0
       end
+    end
+  end
+
+  def score_for_word(word)
+    case word.length
+      when 0, 1, 2
+        0
+      when 3, 4
+        1
+      when 5
+        2
+      when 6
+        3
+      when 7
+        5
+      else
+        11
     end
   end
 
