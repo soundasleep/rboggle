@@ -23,21 +23,18 @@ class StartGame
   private
 
   def create_board
-    @game.boards.create! round_number: game.rounds + 1, serialized: create_serialized
+    board = @game.boards.create round_number: game.rounds + 1
+    board.update serialized: create_serialized(board)
+    board.save!
   end
 
-  def create_serialized
+  def create_serialized(board)
     random_cubes = cubes.shuffle.map do |cube|
-      cube.shuffle.first
-      # TODO look into array.sample
+      cube.sample
     end
 
-    rows = []
-    # TODO can use .map instead of .each
-    # why is this not using board.width/board.height
-    # 4.times.
-    (0..3).each do |row|
-      rows << random_cubes.slice!(0, 4)
+    rows = board.height.times.map do |row|
+      random_cubes.slice!(0, board.width)
     end
 
     # TODO move into model?
