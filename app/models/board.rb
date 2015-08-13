@@ -27,6 +27,10 @@ class Board < ActiveRecord::Base
     serialized.split("|").map { |row| row.split(",") }
   end
 
+  def cells=(rows)
+    update(serialized: rows.map { |row| row.join(",") }.join("|"))
+  end
+
   def cell_at(x,y)
     cells[y][x]
   end
