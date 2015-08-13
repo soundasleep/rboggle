@@ -21,7 +21,6 @@ class StartGame
     # TODO replace update! and create! with update!() and create!()
     @game.update!(started: true)
 
-    # TODO check all .map .each uses a space before blocks
     @game.players.each { |player| player.update! ready: false, guessed: false }
 
     true

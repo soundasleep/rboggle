@@ -28,7 +28,7 @@ RSpec.describe StartGame, type: :service do
     end
 
     context "after both players are ready to start" do
-      before { game.players.each{ |p| p.update! ready: true } }
+      before { game.players.each { |p| p.update! ready: true } }
 
       it "the game is ready to start" do
         expect(game).to be_ready_to_start
