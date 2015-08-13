@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150806033118) do
+ActiveRecord::Schema.define(version: 20150813011611) do
 
   create_table "boards", force: :cascade do |t|
     t.integer  "round_number", limit: 4,                   null: false
@@ -33,7 +33,7 @@ ActiveRecord::Schema.define(version: 20150806033118) do
     t.datetime "updated_at",             null: false
   end
 
-  add_index "dictionaries", ["word"], name: "index_dictionaries_on_word", using: :btree
+  add_index "dictionaries", ["word"], name: "index_dictionaries_on_word", unique: true, using: :btree
 
   create_table "games", force: :cascade do |t|
     t.boolean  "started",    limit: 1, default: false, null: false
