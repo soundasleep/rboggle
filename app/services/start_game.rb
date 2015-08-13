@@ -1,4 +1,11 @@
 class StartGame
+  # from http://www.boardgamegeek.com/thread/300565/review-boggle-veteran-and-beware-different-version
+  # "Old version"
+  CUBES = ["aaciot", "ahmors", "egkluy", "abilty",
+        "acdemp", "egintv", "gilruw", "elpstu",
+        "denosw", "acelrs", "abjmoq", "eefhiy",
+        "ehinps", "dknotu", "adevnz", "biforx"]
+
   attr_reader :game
 
   def initialize(game:)
@@ -46,13 +53,7 @@ class StartGame
   private
 
   def cubes
-    # from http://www.boardgamegeek.com/thread/300565/review-boggle-veteran-and-beware-different-version
-    # "Old version"
-    # TODO move this into a constant on the service
-    ["aaciot", "ahmors", "egkluy", "abilty",
-        "acdemp", "egintv", "gilruw", "elpstu",
-        "denosw", "acelrs", "abjmoq", "eefhiy",
-        "ehinps", "dknotu", "adevnz", "biforx"].map do |cube|
+    CUBES.map do |cube|
       cube.chars.map { |c| c == "q" ? "qu" : c }
     end
   end
