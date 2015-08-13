@@ -5,7 +5,7 @@ RSpec.describe SubmitGuesses, type: :service do
   let(:player1) { game.players.create!(user: user) }
   let(:player2) { game.players.create!(user: user) }
   let(:game) { Game.create! }
-  let(:board) { game.boards.create!(round_number: 1, serialized: "c,a,t,b|d,o,g,z|z,z,z,z|z,z,z,z") }
+  let(:board) { game.boards.create!(round_number: 1, serialized_cells: "c,a,t,b|d,o,g,z|z,z,z,z|z,z,z,z") }
   let(:player1_guesses) { board.guesses.where(player: player1) }
   let(:player2_guesses) { board.guesses.where(player: player2) }
 

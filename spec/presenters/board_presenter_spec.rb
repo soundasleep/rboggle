@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe BoardPresenter, type: :service do
   let(:user) { User.create! }
   let(:game) { Game.create! }
-  let(:board) { game.boards.create!(round_number: 0, serialized: "empty") }
+  let(:board) { game.boards.create!(round_number: 0, serialized_cells: "empty") }
   let(:presenter) { BoardPresenter.new(board) }
 
   before :each do

@@ -5,7 +5,7 @@ RSpec.describe EndRound, type: :service do
   let(:player1) { game.players.create!(user: user) }
   let(:player2) { game.players.create!(user: user) }
   let(:game) { Game.create! }
-  let(:board) { game.boards.create!(round_number: 1, serialized: "empty") }
+  let(:board) { game.boards.create!(round_number: 1, serialized_cells: "empty") }
 
   let(:args) {{ board: board }}
 
