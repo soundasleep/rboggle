@@ -7,12 +7,7 @@ class Game < ActiveRecord::Base
   end
 
   def rounds
-    if boards.any?
-      # TODO boards.maximum (SQL) or boards.map.max
-      boards.max_by(&:round_number).round_number
-    else
-      0
-    end
+    boards.maximum(:round_number) || 0
   end
 
   def ready_to_start?
