@@ -2,6 +2,8 @@ class Game < ActiveRecord::Base
   has_many :players, dependent: :destroy
   has_many :boards, dependent: :destroy
 
+  scope :not_started, -> { where(started: false) }
+
   def target_score
     100
   end

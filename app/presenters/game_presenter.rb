@@ -40,7 +40,7 @@ class GamePresenter < JSONPresenter
   end
 
   def players_ready_count
-    game.players.where(ready: true).count
+    game.players.ready.count
   end
 
 end

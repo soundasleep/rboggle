@@ -21,10 +21,7 @@ class FindOrCreateGame
   private
 
   def existing_game
-    # TODO rename to Game scope
-    # Game.waiting_for_players? Game.not_started?
-    # TODO remove finished: false
-    Game.where(started: false, finished: false).first
+    Game.not_started.first
   end
 
   def create_game
