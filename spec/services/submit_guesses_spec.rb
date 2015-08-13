@@ -2,10 +2,10 @@ require "rails_helper"
 
 RSpec.describe SubmitGuesses, type: :service do
   let(:user) { User.create! }
-  let(:player1) { game.players.create! user: user }
-  let(:player2) { game.players.create! user: user }
+  let(:player1) { game.players.create!(user: user) }
+  let(:player2) { game.players.create!(user: user) }
   let(:game) { Game.create! }
-  let(:board) { game.boards.create! round_number: 1, serialized: "c,a,t,b|d,o,g,z|z,z,z,z|z,z,z,z" }
+  let(:board) { game.boards.create!(round_number: 1, serialized: "c,a,t,b|d,o,g,z|z,z,z,z|z,z,z,z") }
   let(:player1_guesses) { board.guesses.where(player: player1) }
   let(:player2_guesses) { board.guesses.where(player: player2) }
 

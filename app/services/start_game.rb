@@ -18,10 +18,11 @@ class StartGame
     # TODO fail if game has already started
     # TODO locking etc
 
-    # TODO replace update! and create! with update!() and create!()
-    @game.update!(started: true)
+    game.update!(started: true)
 
-    @game.players.each { |player| player.update! ready: false, guessed: false }
+    game.players.each do |player|
+      player.update!(ready: false, guessed: false)
+    end
 
     true
   end

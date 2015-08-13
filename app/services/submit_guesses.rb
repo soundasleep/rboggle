@@ -11,10 +11,10 @@ class SubmitGuesses
     @board.guesses.where(player: player).destroy_all
 
     guesses.split.uniq.each do |guess|
-      @board.guesses.create! word: guess, player: player
+      @board.guesses.create!(word: guess, player: player)
     end
 
-    player.update! guessed: true
+    player.update!(guessed: true)
     # TODO can do player.guessed! or is this column misnamed?
 
     # possibly end the round

@@ -74,7 +74,7 @@ RSpec.describe FindOrCreateGame, type: :service do
     before do
       @game = Game.create!
       another_user = User.create!
-      @player = game.players.create! user: another_user
+      @player = game.players.create!(user: another_user)
     end
 
     context "when called" do

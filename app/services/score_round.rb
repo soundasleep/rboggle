@@ -30,13 +30,13 @@ class ScoreRound
 
   def check_all_guesses_are_in_dictionary
     board.guesses.each do |guess|
-      guess.update! in_dictionary: @words.include?(guess.word)
+      guess.update!(in_dictionary: @words.include?(guess.word))
     end
   end
 
   def check_all_guesses_are_possible
     board.guesses.each do |guess|
-      guess.update! possible: WordIsInBoard.new(board: board, word: guess.word).call
+      guess.update!(possible: WordIsInBoard.new(board: board, word: guess.word).call)
     end
   end
 
@@ -44,16 +44,16 @@ class ScoreRound
     all_words = board.guesses.map(&:word)
 
     board.guesses.each do |guess|
-      guess.update! unique: all_words.count(guess.word) == 1, checked: true
+      guess.update!(unique: all_words.count(guess.word) == 1, checked: true)
     end
   end
 
   def update_guess_scores
     board.guesses.each do |guess|
       if guess.unique? && guess.in_dictionary? && guess.possible?
-        guess.update! score: score_for_word(guess.word)
+        guess.update!(score: score_for_word(guess.word))
       else
-        guess.update! score: 0
+        guess.update!(score: 0)
       end
     end
   end
@@ -78,7 +78,7 @@ class ScoreRound
   def update_player_scores
     board.game.players.each do |player|
       round_score = board.guesses.where(player: player).map(&:score).inject(0, &:+)
-      player.update! score: player.score + round_score
+      player.update!(score: player.score + round_score)
     end
   end
 

@@ -6,8 +6,8 @@ RSpec.describe GamePresenter, type: :service do
   let(:presenter) { GamePresenter.new(game) }
 
   before :each do
-    game.players.create! user: user
-    game.players.create! user: user
+    game.players.create!(user: user)
+    game.players.create!(user: user)
   end
 
   context "#to_json" do

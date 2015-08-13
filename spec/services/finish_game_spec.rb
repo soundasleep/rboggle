@@ -2,8 +2,8 @@ require "rails_helper"
 
 RSpec.describe FinishGame, type: :service do
   let(:user) { User.create! }
-  let(:player1) { game.players.create! user: user }
-  let(:player2) { game.players.create! user: user }
+  let(:player1) { game.players.create!(user: user) }
+  let(:player2) { game.players.create!(user: user) }
   let(:game) { Game.create! started: true }
 
   before :each do
@@ -43,7 +43,7 @@ RSpec.describe FinishGame, type: :service do
   end
 
   context "when player 1 has 20 points" do
-    before { player1.update! score: 20 }
+    before { player1.update!(score: 20) }
 
     context "after called" do
       before { FinishGame.new(game: game).call }
@@ -61,7 +61,7 @@ RSpec.describe FinishGame, type: :service do
   end
 
   context "when player 1 has 100 points" do
-    before { player1.update! score: 100 }
+    before { player1.update!(score: 100) }
 
     context "after called" do
       before { FinishGame.new(game: game).call }
@@ -79,8 +79,8 @@ RSpec.describe FinishGame, type: :service do
   end
 
   context "when both players have 200 points" do
-    before { player1.update! score: 200 }
-    before { player2.update! score: 200 }
+    before { player1.update!(score: 200) }
+    before { player2.update!(score: 200) }
 
     context "after called" do
       before { FinishGame.new(game: game).call }
