@@ -6,6 +6,8 @@ class ScoreRound
   end
 
   def call
+    load_dictionary
+
     check_all_guesses_are_in_dictionary
 
     check_all_guesses_are_possible
@@ -21,12 +23,14 @@ class ScoreRound
 
   private
 
+  def load_dictionary
+    # we load the dictionary into memory only once
+    @words = Dictionary.pluck(:word)
+  end
+
   def check_all_guesses_are_in_dictionary
     board.guesses.each do |guess|
-      # TODO load dictionary into local set rather than n queries
-      # apparently 300k+ words are OK
-      # lets try!
-      guess.update! in_dictionary: Dictionary.where(word: guess.word).any?
+      guess.update! in_dictionary: @words.include?(guess.word)
     end
   end
 
