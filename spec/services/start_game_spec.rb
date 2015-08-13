@@ -111,6 +111,28 @@ RSpec.describe StartGame, type: :service do
               expect(board.round_number).to eq(1)
             end
           end
+
+          context "with another game" do
+            let(:game2) { Game.create! }
+
+            before :each do
+              game2.players.create! user: user
+              game2.players.create! user: user
+              StartGame.new(game: game2).call
+            end
+
+            it "is different from the first game" do
+              expect(game).to_not eq(game2)
+            end
+
+            it "has different boards" do
+              expect(game.boards.first).to_not eq(game2.boards.first)
+            end
+
+            it "has different cells" do
+              expect(game.boards.first.cells).to_not eq(game2.boards.first.cells)
+            end
+          end
         end
       end
     end
