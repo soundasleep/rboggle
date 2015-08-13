@@ -2,10 +2,10 @@ require "rails_helper"
 
 RSpec.describe ScoreRound, type: :service do
   let(:user) { User.create! }
-  let(:player1) { game.players.create! user: user }
-  let(:player2) { game.players.create! user: user }
+  let(:player1) { game.players.create!(user: user) }
+  let(:player2) { game.players.create!(user: user) }
   let(:game) { Game.create! }
-  let(:board) { game.boards.create! round_number: 1, finished: true, serialized: "c,a,t,b|d,o,g,z|s,z,z,z|z,z,z,z" }
+  let(:board) { game.boards.create!(round_number: 1, finished: true, serialized_cells: "c,a,t,b|d,o,g,z|s,z,z,z|z,z,z,z") }
 
   let(:args) {{ board: board }}
 
@@ -15,14 +15,14 @@ RSpec.describe ScoreRound, type: :service do
     player1.save!
     player2.save!
 
-    Dictionary.create! word: "at"
-    Dictionary.create! word: "bat"
-    Dictionary.create! word: "cat"
-    Dictionary.create! word: "coat"
-    Dictionary.create! word: "dog"
-    Dictionary.create! word: "invalid"
-    Dictionary.create! word: "toads"
-    Dictionary.create! word: "toadsz"
+    Dictionary.create!(word: "at")
+    Dictionary.create!(word: "bat")
+    Dictionary.create!(word: "cat")
+    Dictionary.create!(word: "coat")
+    Dictionary.create!(word: "dog")
+    Dictionary.create!(word: "invalid")
+    Dictionary.create!(word: "toads")
+    Dictionary.create!(word: "toadsz")
   end
 
   context "before called" do
@@ -57,8 +57,8 @@ RSpec.describe ScoreRound, type: :service do
 
   context "with player 1 submitting cat,dog" do
     before {
-      board.guesses.create! player: player1, word: "cat"
-      board.guesses.create! player: player1, word: "dog"
+      board.guesses.create!(player: player1, word: "cat")
+      board.guesses.create!(player: player1, word: "dog")
     }
 
     context "before called" do
@@ -113,7 +113,7 @@ RSpec.describe ScoreRound, type: :service do
 
     context "with player 2 submitting cat,dog" do
       before {
-        board.guesses.create! player: player2, word: "cat"
+        board.guesses.create!(player: player2, word: "cat")
       }
 
       context "before called" do
@@ -170,7 +170,7 @@ RSpec.describe ScoreRound, type: :service do
 
   context "with player 1 submitting invalid" do
     before {
-      board.guesses.create! player: player1, word: "invalid"
+      board.guesses.create!(player: player1, word: "invalid")
     }
 
     context "after called" do
@@ -204,7 +204,7 @@ RSpec.describe ScoreRound, type: :service do
 
   context "with player 1 submitting dogz" do
     before {
-      board.guesses.create! player: player1, word: "dogz"
+      board.guesses.create!(player: player1, word: "dogz")
     }
 
     context "after called" do
@@ -238,7 +238,7 @@ RSpec.describe ScoreRound, type: :service do
 
   context "with player 1 submitting bat" do
     before {
-      board.guesses.create! player: player1, word: "bat"
+      board.guesses.create!(player: player1, word: "bat")
     }
 
     context "after called" do
@@ -272,7 +272,7 @@ RSpec.describe ScoreRound, type: :service do
 
   context "with player 1 submitting coat" do
     before {
-      board.guesses.create! player: player1, word: "coat"
+      board.guesses.create!(player: player1, word: "coat")
     }
 
     context "after called" do
@@ -306,7 +306,7 @@ RSpec.describe ScoreRound, type: :service do
 
   context "with player 1 submitting toads" do
     before {
-      board.guesses.create! player: player1, word: "toads"
+      board.guesses.create!(player: player1, word: "toads")
     }
 
     context "after called" do
@@ -339,7 +339,7 @@ RSpec.describe ScoreRound, type: :service do
   end
   context "with player 1 submitting toadsz" do
     before {
-      board.guesses.create! player: player1, word: "toadsz"
+      board.guesses.create!(player: player1, word: "toadsz")
     }
 
     context "after called" do
@@ -373,7 +373,7 @@ RSpec.describe ScoreRound, type: :service do
 
   context "with player 1 submitting at" do
     before {
-      board.guesses.create! player: player1, word: "at"
+      board.guesses.create!(player: player1, word: "at")
     }
 
     context "after called" do

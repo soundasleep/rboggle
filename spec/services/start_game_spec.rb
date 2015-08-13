@@ -5,8 +5,8 @@ RSpec.describe StartGame, type: :service do
   let(:game) { Game.create! }
 
   before :each do
-    game.players.create! user: user
-    game.players.create! user: user
+    game.players.create!(user: user)
+    game.players.create!(user: user)
   end
 
   let(:args) { { game: game } }
@@ -28,7 +28,7 @@ RSpec.describe StartGame, type: :service do
     end
 
     context "after both players are ready to start" do
-      before { game.players.each{ |p| p.update! ready: true } }
+      before { game.players.each { |p| p.update!(ready: true) } }
 
       it "the game is ready to start" do
         expect(game).to be_ready_to_start
@@ -109,6 +109,28 @@ RSpec.describe StartGame, type: :service do
 
             it "is round 1" do
               expect(board.round_number).to eq(1)
+            end
+          end
+
+          context "with another game" do
+            let(:game2) { Game.create! }
+
+            before :each do
+              game2.players.create!(user: user)
+              game2.players.create!(user: user)
+              StartGame.new(game: game2).call
+            end
+
+            it "is different from the first game" do
+              expect(game).to_not eq(game2)
+            end
+
+            it "has different boards" do
+              expect(game.boards.first).to_not eq(game2.boards.first)
+            end
+
+            it "has different cells" do
+              expect(game.boards.first.cells).to_not eq(game2.boards.first.cells)
             end
           end
         end

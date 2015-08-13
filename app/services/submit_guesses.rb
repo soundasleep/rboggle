@@ -8,15 +8,13 @@ class SubmitGuesses
   end
 
   def call
-    # TODO replace with destroy_all (performance)
-    @board.guesses.where(player: player).delete_all
+    @board.guesses.where(player: player).destroy_all
 
-    # TODO replace split.reject with just split()
-    guesses.split(/[\s+]/).reject(&:empty?).uniq.each do |guess|
-      @board.guesses.create! word: guess, player: player
+    guesses.split.uniq.each do |guess|
+      @board.guesses.create!(word: guess, player: player)
     end
 
-    player.update! guessed: true
+    player.update!(guessed: true)
     # TODO can do player.guessed! or is this column misnamed?
 
     # possibly end the round

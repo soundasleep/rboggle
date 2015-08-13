@@ -20,7 +20,7 @@ Dir[File.dirname(__FILE__) + "/../dict/*"].map do |file|
       line.scrub!("_").strip!   # ignore invalid UTF characters as necessary
       if line.match(/^[a-z]+$/) && !loaded.include?(line)
         words += 1
-        Dictionary.create! word: line
+        Dictionary.create!(word: line)
         loaded << line
 
         if words % 1000 == 0

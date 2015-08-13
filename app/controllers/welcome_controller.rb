@@ -7,7 +7,7 @@ class WelcomeController < ApplicationController
   private
 
   def waiting_games
-    Game.where(started: false, finished: false)
+    Game.not_started
   end
 
   def your_games

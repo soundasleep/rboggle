@@ -2,20 +2,17 @@ class Game < ActiveRecord::Base
   has_many :players, dependent: :destroy
   has_many :boards, dependent: :destroy
 
+  scope :not_started, -> { where(started: false) }
+
   def target_score
     100
   end
 
   def rounds
-    if boards.any?
-      # TODO boards.maximum (SQL) or boards.map.max
-      boards.max_by(&:round_number).round_number
-    else
-      0
-    end
+    boards.maximum(:round_number) || 0
   end
 
   def ready_to_start?
-    players.all?(&:ready?) && (players.count >= 2)  # TODO use .length since .all? has already loaded all records in SQL
+    players.all?(&:ready?) && players.length >= 2
   end
 end

@@ -34,6 +34,10 @@
       border: 0;
       float: right;
 
+      tbody {
+        background: none;
+      }
+
       td {
         font-weight: bold;
         text-align: center;

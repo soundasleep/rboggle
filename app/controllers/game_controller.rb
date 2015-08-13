@@ -27,7 +27,7 @@ class GameController < ApplicationController
   def ready
     game = find_game
 
-    find_player.update! ready: true
+    find_player.update!(ready: true)
 
     if game.ready_to_start?
       StartGame.new(game: game).call
@@ -39,7 +39,7 @@ class GameController < ApplicationController
   def not_ready
     game = find_game
 
-    find_player.update! ready: false
+    find_player.update!(ready: false)
 
     redirect_to game_path(game)
   end

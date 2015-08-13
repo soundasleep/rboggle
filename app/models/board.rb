@@ -3,7 +3,7 @@ class Board < ActiveRecord::Base
 
   belongs_to :game
 
-  validates :round_number, :serialized, :game, presence: true
+  validates :round_number, :serialized_cells, :game, presence: true
 
   def width
     4
@@ -22,9 +22,11 @@ class Board < ActiveRecord::Base
   end
 
   def cells
-    # TODO rename to serialized_cells?
-    # TODO cache?
-    serialized.split("|").map{ |row| row.split(",") }
+    @cells ||= serialized_cells.split("|").map { |row| row.split(",") }
+  end
+
+  def cells=(rows)
+    update(serialized_cells: rows.map { |row| row.join(",") }.join("|"))
   end
 
   def cell_at(x,y)

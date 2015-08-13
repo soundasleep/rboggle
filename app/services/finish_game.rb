@@ -7,7 +7,7 @@ class FinishGame
 
   def call
     if game.players.any?{ |player| player.score >= game.target_score }
-      game.update! finished: true
+      game.update!(finished: true)
     end
 
     true

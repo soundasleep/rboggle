@@ -32,7 +32,7 @@
       %tfoot
         %tr
           %td Total score
-          %td= @guesses.map(&:score).inject(0, &:+)
+          %td= @guesses.map(&:score).compact.inject(0, &:+)
 
     .actions
       %a.btn.next-round{ href: game_path(@game) }
@@ -40,7 +40,7 @@
         %i.fa.fa-chevron-right
 
   - else
-    #game-board{ "data-expires" => @board.expires_at.iso8601 }
+    #game-board{ "data-expires" => @board.expires_at.iso8601, "data-finished" => @board.finished? }
       = form_tag game_board_submit_path(@game, @board) do |f|
         = text_area_tag "guesses", @guesses.map(&:word).join("\n"), size: "25x10"
         .actions

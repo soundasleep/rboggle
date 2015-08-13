@@ -2,10 +2,10 @@ require "rails_helper"
 
 RSpec.describe EndRound, type: :service do
   let(:user) { User.create! }
-  let(:player1) { game.players.create! user: user }
-  let(:player2) { game.players.create! user: user }
+  let(:player1) { game.players.create!(user: user) }
+  let(:player2) { game.players.create!(user: user) }
   let(:game) { Game.create! }
-  let(:board) { game.boards.create! round_number: 1, serialized: "empty" }
+  let(:board) { game.boards.create!(round_number: 1, serialized_cells: "empty") }
 
   let(:args) {{ board: board }}
 
@@ -108,7 +108,7 @@ RSpec.describe EndRound, type: :service do
     end
 
     context "after player 1 guesses" do
-      before { player1.update! guessed: true }
+      before { player1.update!(guessed: true) }
 
       context "after called" do
         before { EndRound.new(board: board).call }
@@ -121,7 +121,7 @@ RSpec.describe EndRound, type: :service do
       end
 
       context "after player 2 guesses" do
-        before { player2.update! guessed: true }
+        before { player2.update!(guessed: true) }
 
         context "after called" do
           before { EndRound.new(board: board).call }
