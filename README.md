@@ -3,6 +3,17 @@ Rboggle [![Build Status](https://travis-ci.org/soundasleep/rboggle.svg?branch=ma
 
 A multiplayer open source implementation of Boggle in Ruby on Rails.
 
+## Installing
+
+Copy `.env.sample` to `.env` and update as necessary, particularly your [Google OAuth2 parameters](http://jevon.org/wiki/Google_OAuth2_with_Ruby_on_Rails).
+
+```
+bundle
+rake db:setup
+rails s
+guard
+```
+
 ## Dictionary
 
 The dictionaries used are the English and English (GB) dictionaries,
