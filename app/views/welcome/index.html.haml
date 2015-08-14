@@ -38,3 +38,7 @@
 
   - else
     %p You need to #{link_to "log in", login_path} first.
+
+  %h2 Dictionary
+
+  #{pluralize(Dictionary.count, "word")} in the dictionary.
