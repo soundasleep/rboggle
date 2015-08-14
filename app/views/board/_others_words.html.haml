@@ -39,4 +39,4 @@
           %tfoot
             %tr
               %td Total score
-              %td= @guesses.map(&:score).compact.inject(0, &:+)
+              %td= guesses.map(&:score).compact.inject(0, &:+)
