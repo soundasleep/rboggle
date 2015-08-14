@@ -48,6 +48,4 @@ test:
 #
 production:
   <<: *default
-  database: rboggle_production
-  username: rboggle
-  password: <%= ENV['RBOGGLE_DATABASE_PASSWORD'] %>
+  database: rboggle
