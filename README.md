@@ -22,4 +22,6 @@ This is because not all operating systems have dictionaries, and often these dic
 do not provide plural versions.
 
 These can be browsed in [dict/](dict/) and updated as necessary.
-At last count there were approximately ~244,000 words.
+At last count there were approximately ~243,000 words.
+
+Load the dictionary with `rake db:setup`.
