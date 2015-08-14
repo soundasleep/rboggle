@@ -56,10 +56,7 @@
     }
   }
 
-  .your-words {
-    float: right;
-    width: 45%;
-
+  .word-list {
     h3 {
       text-align: center;
       margin: 0;
@@ -114,6 +111,34 @@
       &.nothing {
         padding-left: 2px;
         width: 18px;
+      }
+    }
+  }
+
+  .your-words {
+    float: right;
+    width: 45%;
+  }
+
+  .others-words {
+    clear: both;
+
+    table.all-players {
+      margin: 0;
+      padding: 0;
+      border: 0;
+      width: 100%;
+
+      tbody, td {
+        background: none;
+      }
+
+      td.player {
+        vertical-align: top;
+
+        h4 {
+          margin-top: 0;
+        }
       }
     }
   }

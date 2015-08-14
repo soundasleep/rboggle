@@ -1,0 +1,42 @@
+.others-words.word-list
+  %h3 All Players
+
+  %table.all-players
+    %tr
+    - (@board.game.players - [@player]).each do |player|
+      %td.player
+        %h4= player.user.name
+
+        - guesses = @board.guesses.where(player: player)
+
+        %table
+          %thead
+            %tr
+              %th Word
+              %th Score
+          %tbody
+            - guesses.sort_by(&:word).each do |guess|
+              %tr
+                %td{ class: guess_classes(guess) }
+                  - if guess.valid? && guess.possible? && guess.in_dictionary?
+                    %i.guess-status.fa.fa-check
+                  - elsif !guess.in_dictionary?
+                    %i.guess-status.fa.fa-times
+                  - else
+                    %i.guess-status.nothing -
+
+                  .word
+                    - if guess.in_dictionary?
+                      = link_to guess.word, "https://en.wiktionary.org/wiki/#{guess.word}", title: "View on Wiktionary"
+                    - else
+                      = guess.word
+
+                  - if !guess.unique?
+                    (#{pluralize(@board.guesses.where(word: guess.word).count, "person")} guessed)
+                %td.score
+                  = guess.score
+
+          %tfoot
+            %tr
+              %td Total score
+              %td= @guesses.map(&:score).compact.inject(0, &:+)

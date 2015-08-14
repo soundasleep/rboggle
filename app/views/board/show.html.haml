@@ -27,3 +27,6 @@
     - else
       %dt Seconds left
       %dd.seconds-left (loading)
+
+  - if @board.finished?
+    = render partial: "others_words"

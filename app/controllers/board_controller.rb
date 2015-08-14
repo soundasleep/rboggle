@@ -5,6 +5,7 @@ class BoardController < ApplicationController
     @game = find_game
     @board = find_board
     @guesses = find_guesses
+    @player = find_player
   end
 
   def submit
