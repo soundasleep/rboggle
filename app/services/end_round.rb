@@ -19,7 +19,7 @@ class EndRound
   private
 
   def leeway_time
-    5.seconds
+    10.seconds
   end
 
 end

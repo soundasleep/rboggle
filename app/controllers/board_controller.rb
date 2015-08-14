@@ -19,19 +19,19 @@ class BoardController < ApplicationController
   private
 
   def find_game
-    Game.find(params[:game_id])
+    @find_game ||= Game.find(params[:game_id])
   end
 
   def find_board
-    find_game.boards.find(params[:board_id] || params[:id])
+    @find_board ||= find_game.boards.find(params[:id] || params[:board_id])
   end
 
   def find_player
-    find_game.players.where(user: current_user).first!
+    @find_player ||= find_game.players.where(user: current_user).first!
   end
 
   def find_guesses
-    find_board.guesses.where(player: find_player)
+    @find_guesses ||= find_board.guesses.where(player: find_player)
   end
 
 end
