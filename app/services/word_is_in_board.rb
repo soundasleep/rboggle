@@ -69,9 +69,7 @@ class WordIsInBoard
     end
 
     def has_a_search_tree(remaining)
-      all_valid_search_trees.any? do |tree|
-        remaining.empty? || tree.has_word?(remaining)
-      end
+      remaining.empty? || all_valid_search_trees.any? { |tree| tree.has_word?(remaining) }
     end
 
   end

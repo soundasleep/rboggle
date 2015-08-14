@@ -5,6 +5,35 @@ RSpec.describe WordIsInBoard, type: :service do
   let(:board) { game.boards.create!(round_number: 1, finished: true, serialized_cells: "c,a,t,b|d,o,g,a|z,z,p,a|qu,z,q,l") }
   let(:result) { WordIsInBoard.new(board: board, word: word).call }
 
+  # issue #3
+  context "zquz" do
+    let(:word) { "zquz" }
+
+    it "returns true" do
+      expect(result).to be(true)
+    end
+  end
+
+  context "squat board" do
+    let(:board) { game.boards.create!(round_number: 1, finished: true, serialized_cells: "t,a,e,e|s,qu,e,a|m,m,n,i|u,u,t,z") }
+
+    context "squat" do
+      let(:word) { "squat" }
+
+      it "returns true" do
+        expect(result).to be(true)
+      end
+    end
+
+    context "quest" do
+      let(:word) { "quest" }
+
+      it "returns false" do
+        expect(result).to be(false)
+      end
+    end
+  end
+
   context "cat" do
     let(:word) { "cat" }
 
