@@ -14,6 +14,8 @@ rails s
 guard
 ```
 
+On Windows, use `bundle install --without production`.
+
 ## Dictionary
 
 The dictionaries used are the English and English (GB) dictionaries,

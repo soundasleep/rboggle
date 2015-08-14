@@ -63,10 +63,10 @@ end
 
 # Livereload
 group :development do
-  gem "guard", ">= 2.2.2",       :require => false
-  gem "guard-livereload",        :require => false
+  gem "guard", ">= 2.2.2",       require: false
+  gem "guard-livereload",        require: false
   gem "rack-livereload"
-  gem "rb-fsevent",              :require => false
+  gem "rb-fsevent",              require: false
 end
 
 group :test do
@@ -78,6 +78,9 @@ source "https://rails-assets.org" do
   gem "rails-assets-timecircles"
 end
 
+# For Windows
+gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw]
+
 # For deploy
 group :development do
   gem 'capistrano',         require: false
@@ -87,5 +90,6 @@ group :development do
   gem 'capistrano3-puma',   require: false
 end
 
-gem 'puma'
-
+group :production do
+  gem 'puma'
+end
