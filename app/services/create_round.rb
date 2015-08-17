@@ -1,4 +1,4 @@
-class StartGame
+class CreateRound
   # from http://www.boardgamegeek.com/thread/300565/review-boggle-veteran-and-beware-different-version
   # "Old version"
   CUBE_STRINGS = ["aaciot", "ahmors", "egkluy", "abilty",
@@ -14,8 +14,6 @@ class StartGame
 
   def call
     create_board
-
-    # TODO fail if game has already started
 
     game.with_lock do
       game.update!(started: true)

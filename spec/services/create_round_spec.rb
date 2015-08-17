@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe StartGame, type: :service do
+RSpec.describe CreateRound, type: :service do
   let(:user) { User.create! }
   let(:game) { Game.create! }
 
@@ -10,7 +10,7 @@ RSpec.describe StartGame, type: :service do
   end
 
   let(:args) { { game: game } }
-  let(:service) { StartGame.new(args) }
+  let(:service) { CreateRound.new(args) }
 
   context "before called" do
     context "the game" do
@@ -118,7 +118,7 @@ RSpec.describe StartGame, type: :service do
             before :each do
               game2.players.create!(user: user)
               game2.players.create!(user: user)
-              StartGame.new(game: game2).call
+              CreateRound.new(game: game2).call
             end
 
             it "is different from the first game" do

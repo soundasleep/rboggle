@@ -30,7 +30,7 @@ class GameController < ApplicationController
     find_player.update!(ready: true)
 
     if game.ready_to_start?
-      StartGame.new(game: game).call
+      CreateRound.new(game: game).call
     end
 
     redirect_to game_path(game)
