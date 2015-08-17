@@ -16,12 +16,13 @@ class StartGame
     create_board
 
     # TODO fail if game has already started
-    # TODO locking etc
 
-    game.update!(started: true)
+    game.with_lock do
+      game.update!(started: true)
 
-    game.players.each do |player|
-      player.update!(ready: false, guessed: false)
+      game.players.each do |player|
+        player.update!(ready: false, guessed: false)
+      end
     end
 
     true

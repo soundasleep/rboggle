@@ -8,14 +8,16 @@ class SubmitGuesses
   end
 
   def call
-    @board.guesses.where(player: player).destroy_all
+    board.with_lock do
+      board.guesses.where(player: player).destroy_all
 
-    guesses.split.uniq.each do |guess|
-      @board.guesses.create!(word: guess, player: player)
+      guesses.split.uniq.each do |guess|
+        board.guesses.create!(word: guess, player: player)
+      end
+
+      player.update!(guessed: true)
+      # TODO can do player.guessed! or is this column misnamed?
     end
-
-    player.update!(guessed: true)
-    # TODO can do player.guessed! or is this column misnamed?
 
     # possibly end the round
     EndRound.new(board: board).call

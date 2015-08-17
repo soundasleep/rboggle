@@ -6,11 +6,13 @@ class EndRound
   end
 
   def call
-    if board.game.players.all?(&:guessed?) || Time.now > board.expires_at + leeway_time
-      board.update!(finished: true, finished_at: Time.now)
+    board.with_lock do
+      if board.game.players.all?(&:guessed?) || Time.now > board.expires_at + leeway_time
+        board.update!(finished: true, finished_at: Time.now)
 
-      # do scoring
-      ScoreRound.new(board: board).call
+        # do scoring
+        ScoreRound.new(board: board).call
+      end
     end
 
     true

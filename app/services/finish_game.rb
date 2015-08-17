@@ -6,8 +6,10 @@ class FinishGame
   end
 
   def call
-    if game.players.any?{ |player| player.score >= game.target_score }
-      game.update!(finished: true)
+    game.with_lock do
+      if game.players.any?{ |player| player.score >= game.target_score }
+        game.update!(finished: true)
+      end
     end
 
     true

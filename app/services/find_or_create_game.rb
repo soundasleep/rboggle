@@ -7,7 +7,6 @@ class FindOrCreateGame
   end
 
   def call
-    # TODO add locks
     game = existing_game || create_game
 
     game.with_lock do
