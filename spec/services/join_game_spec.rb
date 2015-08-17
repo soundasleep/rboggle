@@ -1,9 +1,9 @@
 require "rails_helper"
 
-RSpec.describe FindOrCreateGame, type: :service do
+RSpec.describe JoinGame, type: :service do
   let(:user) { User.create! }
   let(:args) { { user: user } }
-  let(:service) { FindOrCreateGame.new(args) }
+  let(:service) { JoinGame.new(args) }
 
   context "when called" do
     let(:result) { service.call }

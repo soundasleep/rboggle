@@ -1,5 +1,4 @@
-# TODO rename to JoinGame?
-class FindOrCreateGame
+class JoinGame
   attr_reader :user
 
   def initialize(user:)

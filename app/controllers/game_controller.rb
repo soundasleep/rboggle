@@ -2,7 +2,7 @@ class GameController < ApplicationController
   before_filter :authenticate
 
   def create
-    game = find_or_create_game(current_user)
+    game = join_game(current_user)
 
     redirect_to game_path(game)
   end
@@ -54,8 +54,8 @@ class GameController < ApplicationController
     find_game.players.where(user: current_user).first!
   end
 
-  def find_or_create_game(user)
-    FindOrCreateGame.new(user: user).call
+  def join_game(user)
+    JoinGame.new(user: user).call
   end
 
   def find_or_create_player(game)
