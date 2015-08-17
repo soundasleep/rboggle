@@ -20,12 +20,12 @@ class SubmitGuesses
     end
 
     # possibly end the round
-    EndRound.new(board: board).call
+    ended = EndRound.new(board: board).call
 
-    # TODO if you don't end the round, do you want to possibly finish the game?
-
-    # possibly end the game
-    FinishGame.new(game: board.game).call
+    if ended
+      # possibly end the game
+      FinishGame.new(game: board.game).call
+    end
   end
 
 end

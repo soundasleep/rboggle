@@ -73,11 +73,17 @@ RSpec.describe EndRound, type: :service do
     end
 
     context "after called" do
-      before { EndRound.new(board: board).call }
+      before { @result = EndRound.new(board: board).call }
 
       context "the board" do
         it "is not finished" do
           expect(board).to_not be_finished
+        end
+      end
+
+      context "the result" do
+        it "is false" do
+          expect(@result).to eq(false)
         end
       end
     end
@@ -155,11 +161,17 @@ RSpec.describe EndRound, type: :service do
     end
 
     context "after called" do
-      before { EndRound.new(board: board).call }
+      before { @result = EndRound.new(board: board).call }
 
       context "the board" do
         it "is finished" do
           expect(board).to be_finished
+        end
+      end
+
+      context "the result" do
+        it "is true" do
+          expect(@result).to eq(true)
         end
       end
     end

@@ -12,10 +12,13 @@ class EndRound
 
         # do scoring
         ScoreRound.new(board: board).call
+
+        # round successfully ended
+        return true
       end
     end
 
-    true
+    false
   end
 
   private
