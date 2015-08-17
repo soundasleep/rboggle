@@ -10,9 +10,11 @@ class FindOrCreateGame
     # TODO add locks
     game = existing_game || create_game
 
-    # only create a new player for unique users
-    if !game.players.any?{ |p| p.user == user }
-      game.players.create!(user: user)
+    game.with_lock do
+      # only create a new player for unique users
+      if !game.players.any?{ |p| p.user == user }
+        game.players.create!(user: user)
+      end
     end
 
     game

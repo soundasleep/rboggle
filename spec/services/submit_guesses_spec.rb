@@ -105,6 +105,50 @@ RSpec.describe SubmitGuesses, type: :service do
         end
       end
 
+      context "after player 2 submits guesses too" do
+        before { SubmitGuesses.new(board: board, player: player2, guesses: "cat\ndog").call }
+
+        it "player 1 has guessed" do
+          expect(player1).to be_guessed
+        end
+
+        it "player 2 has guessed" do
+          expect(player2).to be_guessed
+        end
+
+        context "player 1s guesses" do
+          let(:player_guesses) { player1_guesses }
+
+          it "has two" do
+            expect(player_guesses.length).to eq(2)
+          end
+
+          it "has cat" do
+            expect(player_guesses.map(&:word)).to include("cat")
+          end
+
+          it "has dog" do
+            expect(player_guesses.map(&:word)).to include("dog")
+          end
+        end
+
+        context "player 2s guesses" do
+          let(:player_guesses) { player2_guesses }
+
+          it "has two" do
+            expect(player_guesses.length).to eq(2)
+          end
+
+          it "has cat" do
+            expect(player_guesses.map(&:word)).to include("cat")
+          end
+
+          it "has dog" do
+            expect(player_guesses.map(&:word)).to include("dog")
+          end
+        end
+      end
+
       context "with another two unique guesses" do
         let(:guesses) { "cat\nbird" }
         let(:player) { player1 }
