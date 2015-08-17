@@ -47,7 +47,7 @@ RSpec.describe FindPossibleWords, type: :service do
         end
 
         it "does not include invalid" do
-          expect(words).to include("invalid")
+          expect(words).to_not include("invalid")
         end
       end
     end
