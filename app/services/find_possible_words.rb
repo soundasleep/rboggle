@@ -35,6 +35,12 @@ class FindPossibleWords
       d.word.length > 2 && d.word.length <= maximum_word_length
     end.select do |d|
       d.word.chars.all? { |c| valid_characters.include?(c) }
+    end.select do |d|
+      word = d.word
+      all_cells.each do |cell|
+        word = word.sub(cell, "")
+      end
+      word.empty?
     end
   end
 
