@@ -37,6 +37,12 @@ RSpec.describe ScoreRound, type: :service do
         expect(player2.score).to eq(0)
       end
     end
+
+    context "possible words" do
+      it "are empty" do
+        expect(board.possible_words).to be_empty
+      end
+    end
   end
 
   context "after called" do
@@ -107,6 +113,12 @@ RSpec.describe ScoreRound, type: :service do
       context "player 2" do
         it "has 0 score" do
           expect(player2.score).to eq(0)
+        end
+      end
+
+      context "possible words" do
+        it "are empty" do
+          expect(board.possible_words).to be_empty
         end
       end
     end

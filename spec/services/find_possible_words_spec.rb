@@ -13,6 +13,9 @@ RSpec.describe FindPossibleWords, type: :service do
     Dictionary.create!(word: "invalid")
     Dictionary.create!(word: "toads")
     Dictionary.create!(word: "toadsz")
+    Dictionary.create!(word: "quz")
+    Dictionary.create!(word: "zquz")
+    Dictionary.create!(word: "zquc")
   end
 
   context "before called" do
@@ -42,12 +45,24 @@ RSpec.describe FindPossibleWords, type: :service do
           expect(words).to include("bat")
         end
 
+        it "includes quz" do
+          expect(words).to include("quz")
+        end
+
+        it "includes zquz" do
+          expect(words).to include("zquz")
+        end
+
         it "does not include at" do
           expect(words).to_not include("at")
         end
 
         it "does not include invalid" do
           expect(words).to_not include("invalid")
+        end
+
+        it "does not include zquc" do
+          expect(words).to_not include("zquc")
         end
       end
     end
