@@ -22,6 +22,28 @@ class FindPossibleWords
     end
   end
 
+  def valid_search_space
+    load_dictionary.select { |d| valid_word_length(d) }
+        .select { |d| has_valid_characters(d) }
+        .select { |d| has_enough_characters(d) }
+  end
+
+  def valid_word_length(dictionary)
+    dictionary.word.length >= minimum_word_length && dictionary.word.length <= maximum_word_length
+  end
+
+  def has_valid_characters(dictionary)
+    dictionary.word.chars.all? { |c| valid_characters.include?(c) }
+  end
+
+  def has_enough_characters(dictioanry)
+    word = dictioanry.word
+    all_cells.each do |cell|
+      word = word.sub(cell, "")
+    end
+    word.empty?
+  end
+
   def all_cells
     @all_cells ||= board.cells.flatten
   end
@@ -30,28 +52,18 @@ class FindPossibleWords
     @valid_characters ||= all_cells.join("").chars.uniq
   end
 
-  def valid_search_space
-    load_dictionary.select do |d|
-      d.word.length > 2 && d.word.length <= maximum_word_length
-    end.select do |d|
-      d.word.chars.all? { |c| valid_characters.include?(c) }
-    end.select do |d|
-      word = d.word
-      all_cells.each do |cell|
-        word = word.sub(cell, "")
-      end
-      word.empty?
-    end
-  end
-
-  def load_dictionary
-    # we load the dictionary into memory only once
-    @words = Dictionary.all
+  def minimum_word_length
+    # this is dependent on the scoring algorithm
+    3
   end
 
   def maximum_word_length
     # this is dependent on the cells used to create the game, particularly for 'qu'
     16 + 1
+  end
+
+  def load_dictionary
+    @dictionary ||= Dictionary.all
   end
 
 end
