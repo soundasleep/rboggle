@@ -230,8 +230,77 @@ RSpec.describe SubmitGuesses, type: :service do
           expect(player2_guesses).to be_empty
         end
       end
+
+      # issue #8
+      # prevent guess submission after a round has been scored
+      context "after 4 seconds" do
+        let(:diff) { 4.seconds }
+
+        before { Timecop.freeze(Time.now + diff) }
+        after { Timecop.return }
+
+        context "after called with more guesses" do
+          before { SubmitGuesses.new(board: board, player: player1, guesses: "frog").call }
+
+          context "player 1s guesses" do
+            it "has one" do
+              expect(player1_guesses.length).to eq(1)
+            end
+
+            it "has frog" do
+              expect(player1_guesses.map(&:word)).to include("frog")
+            end
+
+            it "does not have cat" do
+              expect(player1_guesses.map(&:word)).to_not include("cat")
+            end
+          end
+
+          context "the board" do
+            it "is not finished" do
+              expect(board).to_not be_finished
+            end
+          end
+        end
+      end
+
+      context "with a finished round" do
+        before { board.update! finished: true }
+
+        context "after 2 minutes" do
+          let(:diff) { 2.minutes }
+
+          before { Timecop.freeze(Time.now + diff) }
+          after { Timecop.return }
+
+          context "after called with more guesses" do
+            before { SubmitGuesses.new(board: board, player: player1, guesses: "frog").call }
+
+            context "player 1s guesses" do
+              it "has two" do
+                expect(player1_guesses.length).to eq(2)
+              end
+
+              it "does not have frog" do
+                expect(player1_guesses.map(&:word)).to_not include("frog")
+              end
+
+              it "has cat" do
+                expect(player1_guesses.map(&:word)).to include("cat")
+              end
+            end
+
+            context "the board" do
+              it "is finished" do
+                expect(board).to be_finished
+              end
+            end
+          end
+        end
+      end
     end
   end
+
   context "with two unique guesses separated by spaces" do
     let(:guesses) { "cat\ncat dog \n" }
     let(:player) { player1 }

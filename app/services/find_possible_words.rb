@@ -36,8 +36,8 @@ class FindPossibleWords
     dictionary.word.chars.all? { |c| valid_characters.include?(c) }
   end
 
-  def has_enough_characters(dictioanry)
-    word = dictioanry.word
+  def has_enough_characters(dictionary)
+    word = dictionary.word
     all_cells.each do |cell|
       word = word.sub(cell, "")
     end

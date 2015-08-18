@@ -9,6 +9,10 @@ class SubmitGuesses
 
   def call
     board.with_lock do
+      if board.finished?
+        return false
+      end
+
       board.guesses.where(player: player).destroy_all
 
       guesses.split.uniq.each do |guess|
@@ -17,14 +21,14 @@ class SubmitGuesses
 
       player.update!(guessed: true)
       # TODO can do player.guessed! or is this column misnamed?
-    end
 
-    # possibly end the round
-    ended = EndRound.new(board: board).call
+      # possibly end the round
+      ended = EndRound.new(board: board).call
 
-    if ended
-      # possibly end the game
-      FinishGame.new(game: board.game).call
+      if ended
+        # possibly end the game
+        FinishGame.new(game: board.game).call
+      end
     end
   end
 
