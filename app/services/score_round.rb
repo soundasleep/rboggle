@@ -8,17 +8,17 @@ class ScoreRound
   def call
     load_dictionary
 
-    # TODO wrap this in a lock
-    # currently this causes specs to fail with reloads
-    check_all_guesses_are_in_dictionary
+    board.with_lock do
+      check_all_guesses_are_in_dictionary
 
-    check_all_guesses_are_possible
+      check_all_guesses_are_possible
 
-    check_all_guesses_are_unique
+      check_all_guesses_are_unique
 
-    update_guess_scores
+      update_guess_scores
 
-    update_player_scores
+      update_player_scores
+    end
 
     true
   end
