@@ -2,8 +2,15 @@ require "rails_helper"
 
 RSpec.describe ScoreRound, type: :service do
   let(:user) { User.create! }
-  let(:player1) { game.players.create!(user: user) }
-  let(:player2) { game.players.create!(user: user) }
+  let(:user2) { User.create! }
+  def player1
+    # rspec `let` magic means that this reference is lost when with_lock is used
+    # so we use `def`s instead and making objects in `before`
+    game.players.where(user: user).first
+  end
+  def player2
+    game.players.where(user: user2).first
+  end
   let(:game) { Game.create! }
   let(:board) { game.boards.create!(round_number: 1, finished: true, serialized_cells: "c,a,t,b|d,o,g,z|s,z,z,z|z,z,z,z") }
 
@@ -11,9 +18,9 @@ RSpec.describe ScoreRound, type: :service do
 
   # make sure we have created the board *before* we time travel
   before :each do
+    game.players.create!(user: user)
+    game.players.create!(user: user2)
     board.save!
-    player1.save!
-    player2.save!
 
     Dictionary.create!(word: "at")
     Dictionary.create!(word: "bat")
@@ -35,6 +42,12 @@ RSpec.describe ScoreRound, type: :service do
     context "player 2" do
       it "has 0 score" do
         expect(player2.score).to eq(0)
+      end
+    end
+
+    context "possible words" do
+      it "are empty" do
+        expect(board.possible_words).to be_empty
       end
     end
   end
@@ -107,6 +120,12 @@ RSpec.describe ScoreRound, type: :service do
       context "player 2" do
         it "has 0 score" do
           expect(player2.score).to eq(0)
+        end
+      end
+
+      context "possible words" do
+        it "are empty" do
+          expect(board.possible_words).to be_empty
         end
       end
     end

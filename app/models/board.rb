@@ -1,5 +1,6 @@
 class Board < ActiveRecord::Base
   has_many :guesses, dependent: :destroy
+  has_many :possible_words, dependent: :destroy
 
   belongs_to :game
 

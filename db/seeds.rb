@@ -21,6 +21,9 @@ Dir[File.dirname(__FILE__) + "/../dict/*"].map do |file|
       if line.match(/^[a-z]+$/) && !loaded.include?(line)
         words += 1
         Dictionary.create!(word: line)
+        # TODO instead do Dictionary.create!([word: ...], [word: ...])
+        # faster?
+        # maybe in 1k blocks for responsiveness
         loaded << line
 
         if words % 1000 == 0
