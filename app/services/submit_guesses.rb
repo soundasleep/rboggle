@@ -15,7 +15,7 @@ class SubmitGuesses
 
       board.guesses.where(player: player).destroy_all
 
-      guesses.split.uniq.each do |guess|
+      guesses.downcase.split.uniq.each do |guess|
         board.guesses.create!(word: guess, player: player)
       end
 

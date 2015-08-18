@@ -341,6 +341,7 @@ RSpec.describe SubmitGuesses, type: :service do
       end
     end
   end
+
   context "with one unique guesses" do
     let(:guesses) { "cat\ncat" }
     let(:player) { player1 }
@@ -365,6 +366,29 @@ RSpec.describe SubmitGuesses, type: :service do
       context "player 2s guesses" do
         it "are empty" do
           expect(player2_guesses).to be_empty
+        end
+      end
+    end
+  end
+
+  context "with a guess in uppercase" do
+    let(:guesses) { "CAT" }
+    let(:player) { player1 }
+
+    context "after called" do
+      before { SubmitGuesses.new(args).call }
+
+      context "player 1s guesses" do
+        it "has one" do
+          expect(player1_guesses.length).to eq(1)
+        end
+
+        it "has cat" do
+          expect(player1_guesses.map(&:word)).to include("cat")
+        end
+
+        it "does not have CAT" do
+          expect(player1_guesses.map(&:word)).to_not include("CAT")
         end
       end
     end
