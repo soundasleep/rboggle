@@ -27,7 +27,7 @@
 
                   .word
                     - if guess.in_dictionary?
-                      = link_to guess.word, "https://en.wiktionary.org/wiki/#{guess.word}", title: "View on Wiktionary"
+                      = word_link(guess.word)
                     - else
                       = guess.word
 
@@ -40,3 +40,8 @@
             %tr
               %td Total score
               %td= guesses.map(&:score).compact.inject(0, &:+)
+
+.possible-words
+  %h3 Unguessed Words
+
+  != @board.possible_words.pluck(:word).reject { |w| @board.guesses.where(word: w).any? }.sort.map { |w| word_link(w) }.join(", ")

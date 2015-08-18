@@ -23,15 +23,19 @@ class CreateRound
       end
     end
 
+    @board.with_lock do
+      FindPossibleWords.new(board: @board).call
+    end
+
     true
   end
 
   private
 
   def create_board
-    board = @game.boards.create round_number: game.rounds + 1
-    board.cells = random_cells(board)
-    board.save!
+    @board = @game.boards.create round_number: game.rounds + 1
+    @board.cells = random_cells(@board)
+    @board.save!
   end
 
   def random_cells(board)
