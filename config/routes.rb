@@ -9,6 +9,10 @@ Rails.application.routes.draw do
     post :ready
     post :not_ready
 
+    resources :players, only: [ ] do
+      post :kick
+    end
+
     resources :board, only: [ :show ] do
       post :submit
     end

@@ -32,4 +32,11 @@ RSpec.describe BoardHelper, type: :helper do
       end
     end
   end
+
+  context "#word_link" do
+    it "returns a link to wiktionary" do
+      expect(helper.word_link("word")).to include("wiktionary")
+    end
+  end
+
 end

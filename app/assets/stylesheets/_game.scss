@@ -32,6 +32,21 @@
 
           color: $grey;
         }
+
+        .you {
+          font-size: 75%;
+        }
+      }
+
+      form.kick-form {
+        display: inline-block;
+        float: right;
+
+        input[type=submit], button, .btn {
+          margin-top: 2px;
+          padding: 5px 10px;
+          font-size: 50%;
+        }
       }
     }
 

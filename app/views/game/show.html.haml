@@ -21,6 +21,13 @@
             %i.fa.fa-times-circle
           = player.user.name
 
+          - if player != @player
+            = form_tag game_player_kick_path(@game, player), class: "kick-form" do |f|
+              = submit_tag "Kick"
+
+          - if player == @player
+            %i.you (you!)
+
     .actions
       - if @player.ready?
         = form_tag game_not_ready_path(@game), class: "ready-form" do |f|
