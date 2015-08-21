@@ -8,7 +8,7 @@
         - @game.players.each do |player|
           %th
             - if @player == player
-              %i=t("You!")
+              %i=t("yourself")
             - else
               = player.user.name
 
@@ -23,4 +23,4 @@
       - if @game.boards.empty?
         %tr
           %td{ colspan: @game.players.count + 1 }
-            %i=t("(none yet!)")
+            %i=t("(none yet)")

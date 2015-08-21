@@ -6,7 +6,7 @@
       - winning_player = @game.players.order(score: :desc).first
       = t("%{player} is the winner!", player: winning_player.user.name)
       - if @player == winning_player
-        %i=t("(you!)")
+        %i=t("(yourself)")
 - else
   .game.game-waiting
     %h2=t("Waiting for players...")

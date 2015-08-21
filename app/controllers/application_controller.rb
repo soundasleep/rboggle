@@ -21,8 +21,9 @@ class ApplicationController < ActionController::Base
   end
 
   def set_locale
-    # I18n.locale = params[:locale] || I18n.default_locale
-    FastGettext.locale = params[:locale] || I18n.default_locale
+    FastGettext.locale = params[:locale] || session[:locale] || I18n.default_locale
+
+    session[:locale] = params[:locale] if params[:locale]
   end
 
 end
