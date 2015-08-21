@@ -1,16 +1,15 @@
 - if @game.finished?
   .game.game-finished
-    %h2 Game over
+    %h2=t("Game over")
 
     %h3
       - winning_player = @game.players.order(score: :desc).first
-      = winning_player.user.name
+      = t("%{player} is the winner!", player: winning_player.user.name)
       - if @player == winning_player
-        %i (you!)
-      is the winner!
+        %i=t("(you!)")
 - else
   .game.game-waiting
-    %h2 Waiting for players...
+    %h2=t("Waiting for players...")
 
     %ul.player-list
       - @game.players.each do |player|
@@ -23,19 +22,19 @@
 
           - if player != @player
             = form_tag game_player_kick_path(@game, player), class: "kick-form" do |f|
-              = submit_tag "Kick"
+              = submit_tag t("Kick")
 
           - if player == @player
-            %i.you (you!)
+            %i.you=t("(you!)")
 
     .actions
       - if @player.ready?
         = form_tag game_not_ready_path(@game), class: "ready-form" do |f|
-          = submit_tag "I'm not ready"
+          = submit_tag t("I'm not ready")
 
       - else
         = form_tag game_ready_path(@game), class: "ready-form" do |f|
-          = submit_tag "I'm ready"
+          = submit_tag t("I'm ready")
 
     #wait-for-game-to-start{ GamePresenter.new(@game).to_data_set }
 

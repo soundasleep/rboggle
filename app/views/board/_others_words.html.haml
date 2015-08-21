@@ -1,5 +1,5 @@
 .others-words.word-list
-  %h3 All Players
+  %h3=t("All Players")
 
   %table.all-players
     %tr
@@ -12,8 +12,8 @@
         %table
           %thead
             %tr
-              %th Word
-              %th Score
+              %tt=t("Word")
+              %th=t("Score")
           %tbody
             - guesses.sort_by(&:word).each do |guess|
               %tr
@@ -38,10 +38,10 @@
 
           %tfoot
             %tr
-              %td Total score
+              %td=t("Total score")
               %td= guesses.map(&:score).compact.inject(0, &:+)
 
 .possible-words
-  %h3 Unguessed Words
+  %h3=t("Unguessed Words")
 
   != @board.possible_words.pluck(:word).reject { |w| @board.guesses.where(word: w).any? }.sort.map { |w| word_link(w) }.join(", ")

@@ -1,21 +1,21 @@
 .score-board
-  %h2 Score board
+  %h2=t("Score board")
 
   %table.score-board
     %thead
       %tr
-        %th Player
-        %th.score Score
+        %th=t("Player")
+        %th.score=t("Score")
     %tbody
       - @game.players.order(score: :desc).each do |player|
         %tr
           %td.name
             - if @player == player
-              %i You!
+              %i=t("You!")
             - else
               = player.user.name
           %td.score
             = player.score
 
   .target-score
-    First to #{@game.target_score} wins!
+    =t("First to %{score} wins!", score: @game.target_score)

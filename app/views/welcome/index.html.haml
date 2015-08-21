@@ -2,19 +2,16 @@
   %h1 Boggle
 
   %p.description
-    A multiplayer
-    = link_to "open source", "https://github.com/soundasleep/rboggle"
-    implementation of Boggle in Ruby on Rails.
+    != t("A multiplayer %{open_source} implementation of %{name} in %{app}", { open_source: link_to(t("open source"), "https://github.com/soundasleep/rboggle"), name: t("Boggle"), app: t("Ruby on Rails")})
 
   - if current_user
     = form_tag game_index_path, method: :create do |f|
-      = submit_tag "Play a game"
+      = submit_tag t("Play a game")
 
       %i.tip
-        = pluralize(waiting_games.count, "game")
-        waiting to start
+        = t("%{games} waiting to start", games: pluralize(waiting_games.count, "game"))
 
-    %h2 Active games
+    %h2=t("Your games")
 
     %ul
       - active_games.each do |game|
@@ -23,9 +20,9 @@
           = pluralize(game.rounds, "round")
       - if active_games.empty?
         %li.empty
-          %i (none)
+          %i=t("(none)")
 
-    %h2 Finished games
+    %h2=t("Finished games")
 
     %ul
       - finished_games.each do |game|
@@ -34,11 +31,12 @@
           = pluralize(game.rounds, "round")
       - if finished_games.empty?
         %li.empty
-          %i (none)
+          %i=t("(none)")
 
   - else
-    %p You need to #{link_to "log in", login_path} first.
+    %p You need to #{link_to t("log in"), login_path} first.
 
-  %h2 Dictionary
+  %h2=t("Dictionary")
 
-  #{pluralize(Dictionary.count, "word")} in the dictionary.
+  =t("%{words} in the dictionary", words: p_(Dictionary.count, "word"))
+

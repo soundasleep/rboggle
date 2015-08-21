@@ -16,9 +16,9 @@
           %li.user
             Logged in as
             %i= current_user.name
-          %li.logout= link_to "Log out", logout_path
+          %li.logout= link_to t("Log out"), logout_path
         - else
-          %li.login= link_to "Log in", login_path
+          %li.login= link_to t("Log in"), login_path
 
     - if flash.alert
       .flash.alert=flash.alert
@@ -30,5 +30,13 @@
       = yield
 
     %footer
-      Contribute on
-      = link_to "GitHub", "https://github.com/soundasleep/rboggle", class: "github"
+      .contribute
+        != t("Contribute on %{github}", {github: link_to("GitHub", "https://github.com/soundasleep/rboggle", class: "github")})
+
+      .languages
+        = FastGettext.locale.to_sym
+        = link_to t("English"), locale: "en"
+        = link_to t("French"), locale: "fr"
+        = link_to t("German"), locale: "de"
+        = link_to t("Japanese"), locale: "jp"
+        = link_to t("Māori"), locale: "mi"

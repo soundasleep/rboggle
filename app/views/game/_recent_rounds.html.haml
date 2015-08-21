@@ -1,14 +1,14 @@
 .recent-rounds
-  %h2 Recent rounds
+  %h2=t("Recent rounds")
 
   %table.recent-rounds
     %thead
       %tr
-        %th Round
+        %th=t("Round")
         - @game.players.each do |player|
           %th
             - if @player == player
-              %i You!
+              %i=t("You!")
             - else
               = player.user.name
 
@@ -23,4 +23,4 @@
       - if @game.boards.empty?
         %tr
           %td{ colspan: @game.players.count + 1 }
-            %i (none yet!)
+            %i=t("(none yet!)")

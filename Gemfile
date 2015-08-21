@@ -93,3 +93,6 @@ end
 group :production do
   gem 'puma'
 end
+
+# testing i18n
+gem "collate_rails", path: "/Users/jevon/workspace/collate_rails"
