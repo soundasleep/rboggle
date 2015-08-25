@@ -1,5 +1,6 @@
 class GameController < ApplicationController
   before_filter :authenticate
+  # TODO check before_filter :set_game, only: [ :show, :delete, ... ] / except: [ :index ]
 
   def create
     game = join_game(current_user)
@@ -10,12 +11,13 @@ class GameController < ApplicationController
   def show
     @game = find_game
     @player = find_player
-    if @game.started?
-      board = @game.boards.last
-    end
 
     respond_to do |format|
       format.html do
+        if @game.started?
+          board = @game.boards.last
+        end
+
         if board && !board.finished?
           redirect_to game_board_path(@game, board)
         end
@@ -24,6 +26,9 @@ class GameController < ApplicationController
     end
   end
 
+  # TODO move to /games/2/players/1
+  # ewwwwwwwww
+  # use PATCH [:ready => true] instead of POST /ready (RESTful)
   def ready
     game = find_game
 
@@ -36,6 +41,7 @@ class GameController < ApplicationController
     redirect_to game_path(game)
   end
 
+  # TODO move to /games/2/players/1
   def not_ready
     game = find_game
 

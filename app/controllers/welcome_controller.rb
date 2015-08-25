@@ -1,8 +1,9 @@
 class WelcomeController < ApplicationController
+  # TODO replace with @waiting_games for ps
+  helper_method :waiting_games, :your_games, :active_games, :finished_games
+
   def index
   end
-
-  helper_method :waiting_games, :your_games, :active_games, :finished_games
 
   private
 
@@ -15,12 +16,11 @@ class WelcomeController < ApplicationController
   end
 
   def active_games
-    your_games.select{ |p| !p.game.finished? }
-        .map(&:game)
+    # TODO could/should be scopes one day
+    your_games.reject { |p| p.game.finished? }.map(&:game)
   end
 
   def finished_games
-    your_games.select{ |p| p.game.finished? }
-        .map(&:game)
+    your_games.select { |p| p.game.finished? }.map(&:game)
   end
 end

@@ -1,10 +1,14 @@
 class CreateRound
   # from http://www.boardgamegeek.com/thread/300565/review-boggle-veteran-and-beware-different-version
   # "Old version"
-  CUBE_STRINGS = ["aaciot", "ahmors", "egkluy", "abilty",
-        "acdemp", "egintv", "gilruw", "elpstu",
-        "denosw", "acelrs", "abjmoq", "eefhiy",
-        "ehinps", "dknotu", "adevnz", "biforx"]
+  # TODO maybe move into a GameCube/s service/model? into Game model?
+  # which can contain the cube splitting logic too
+  CUBE_STRINGS = [
+    "aaciot", "ahmors", "egkluy", "abilty",
+    "acdemp", "egintv", "gilruw", "elpstu",
+    "denosw", "acelrs", "abjmoq", "eefhiy",
+    "ehinps", "dknotu", "adevnz", "biforx",
+  ]
 
   attr_reader :game
 
@@ -13,12 +17,17 @@ class CreateRound
   end
 
   def call
-    create_board
+    # TODO fail if game.started?
+    create_board    # TODO move into game.with_lock
 
     game.with_lock do
+      # TODO game.started!
       game.update!(started: true)
 
       game.players.each do |player|
+        # TODO player.not_ready! player.not_guessed! or-- player.reset!
+        # could also create a new RoundPlayer or ActivePlayer or something to represent
+        # one player in each round
         player.update!(ready: false, guessed: false)
       end
     end
@@ -33,7 +42,8 @@ class CreateRound
   private
 
   def create_board
-    @board = @game.boards.create round_number: game.rounds + 1
+    # TODO should be build?
+    @board = @game.boards.create(round_number: game.rounds + 1)
     @board.cells = random_cells(@board)
     @board.save!
   end

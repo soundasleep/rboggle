@@ -11,6 +11,8 @@ class JoinGame
     game.with_lock do
       # only create a new player for unique users
       if !game.players.any?{ |p| p.user == user }
+        # TODO game.players.where(user: user).first_or_create! [ do |player| ... end ]
+        # or - replace this block with a method
         game.players.create!(user: user)
       end
     end

@@ -10,16 +10,16 @@ Rails.application.routes.draw do
     post :not_ready
 
     resources :players, only: [ ] do
-      post :kick
+      post :kick      # TODO this would be a DELETE using REST
     end
 
     resources :board, only: [ :show ] do
-      post :submit
+      post :submit    # TODO this would be /guesses/create
     end
   end
 
   get "/auth/google_login/callback" => "sessions#create"
-  get "/signout" => "sessions#destroy", :as => :logout
+  get "/signout" => "sessions#destroy", as: :logout
 
-  get "sessions/new", :as => :login
+  get "sessions/new", as: :login
 end

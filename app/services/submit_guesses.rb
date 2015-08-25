@@ -15,17 +15,17 @@ class SubmitGuesses
 
       board.guesses.where(player: player).destroy_all
 
-      guesses.downcase.split.uniq.each do |guess|
-        board.guesses.create!(word: guess, player: player)
+      guesses.downcase.split.uniq.each do |word|
+        board.guesses.create!(word: word, player: player)
       end
 
       player.update!(guessed: true)
-      # TODO can do player.guessed! or is this column misnamed?
+      # TODO can do player.guessed! or is this column misnamed? (guessed_this_round)
 
       # possibly end the round
-      ended = EndRound.new(board: board).call
+      round_has_ended = EndRound.new(board: board).call
 
-      if ended
+      if round_has_ended
         # possibly end the game
         FinishGame.new(game: board.game).call
       end

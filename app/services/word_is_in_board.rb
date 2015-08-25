@@ -57,6 +57,7 @@ class WordIsInBoard
     end
 
     def valid_coordinates?(x, y)
+      # TODO (0..board.width).include(x) && ... (also checks integers)
       x >= 0 && y >= 0 && x < board.width && y < board.height
     end
 
