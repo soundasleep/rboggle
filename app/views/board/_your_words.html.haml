@@ -25,7 +25,7 @@
                   = guess.word
 
               - if !guess.unique?
-                (#{pluralize(@board.guesses.where(word: guess.word).count, "person")} guessed)
+                (#{p_(@board.guesses.where(word: guess.word).count, "person")} guessed)
             %td.score
               = guess.score
 

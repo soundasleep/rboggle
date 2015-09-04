@@ -9,26 +9,27 @@
       = submit_tag t("Play a game")
 
       %i.tip
-        = t("%{games} waiting to start", games: pluralize(waiting_games.count, "game"))
+        = t("%{games} waiting to start", games: p_(waiting_games.count, "game"))
 
     %h2=t("Your games")
 
     %ul
       - active_games.each do |game|
         %li
-          = link_to pluralize(game.players.count, "player"), game_path(game)
-          = pluralize(game.rounds, "round")
+          = link_to p_(game.players.count, "player"), game_path(game)
+          = p_(game.rounds, "round")
       - if active_games.empty?
         %li.empty
           %i=t("(none)")
 
     %h2=t("Finished games")
+    %h2=t("player")
 
     %ul
       - finished_games.each do |game|
         %li
-          = link_to pluralize(game.players.count, "player"), game_path(game)
-          = pluralize(game.rounds, "round")
+          = link_to p_(game.players.count, "player"), game_path(game)
+          = p_(game.rounds, "round")
       - if finished_games.empty?
         %li.empty
           %i=t("(none)")
